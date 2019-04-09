@@ -1,3 +1,5 @@
+import _ from "underscore";
+import jquery_moduleDefault from "jquery";
 //     Backbone.js 1.3.3
 
 //     (c) 2010-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -22,8 +24,8 @@
 
   // Next for Node.js or CommonJS. jQuery may not be needed as a module.
   } else if (typeof exports !== 'undefined') {
-    var _ = require('underscore'), $;
-    try { $ = require('jquery'); } catch (e) {}
+    var $;
+    try { $ = jquery_moduleDefault; } catch (e) {}
     factory(root, exports, _, $);
 
   // Finally, as a browser global.

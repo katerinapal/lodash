@@ -1,4 +1,5 @@
-;(function() {
+import fs_moduleObject from "fs";
+(function() {
   'use strict';
 
   /** Used to access the Firebug Lite panel (set by `run`). */
@@ -43,7 +44,7 @@
 
     if (!amd) {
       try {
-        result = require('fs').realpathSync(result);
+        result = fs_moduleObject.realpathSync(result);
       } catch (e) {}
 
       try {

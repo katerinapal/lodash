@@ -1,5 +1,5 @@
-var mapping = require('./_mapping'),
-    fallbackHolder = require('./placeholder');
+import * as mapping from "./_mapping";
+import fallbackHolder from "./placeholder";
 
 /** Built-in value reference. */
 var push = Array.prototype.push;
@@ -135,7 +135,7 @@ function wrapImmutable(func, cloner) {
  * @param {boolean} [options.rearg=true] Specify rearranging arguments.
  * @returns {Function|Object} Returns the converted function or object.
  */
-function baseConvert(util, name, func, options) {
+export default function baseConvert(util, name, func, options) {
   var isLib = typeof name == 'function',
       isObj = name === Object(name);
 
@@ -565,5 +565,3 @@ function baseConvert(util, name, func, options) {
 
   return _;
 }
-
-module.exports = baseConvert;

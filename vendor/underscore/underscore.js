@@ -1,3 +1,4 @@
+export var exports;
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
