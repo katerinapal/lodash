@@ -1,5 +1,8 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /** Used to map aliases to their real names. */
-export var aliasToReal = {
+var aliasToReal = exports.aliasToReal = {
 
   // Lodash aliases.
   'each': 'forEach',
@@ -69,64 +72,22 @@ export var aliasToReal = {
 };;
 
 /** Used to map ary to method names. */
-export var aryMethod = {
-  '1': [
-    'assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create',
-    'curry', 'curryRight', 'defaultsAll', 'defaultsDeepAll', 'floor', 'flow',
-    'flowRight', 'fromPairs', 'invert', 'iteratee', 'memoize', 'method', 'mergeAll',
-    'methodOf', 'mixin', 'nthArg', 'over', 'overEvery', 'overSome','rest', 'reverse',
-    'round', 'runInContext', 'spread', 'template', 'trim', 'trimEnd', 'trimStart',
-    'uniqueId', 'words', 'zipAll'
-  ],
-  '2': [
-    'add', 'after', 'ary', 'assign', 'assignAllWith', 'assignIn', 'assignInAllWith',
-    'at', 'before', 'bind', 'bindAll', 'bindKey', 'chunk', 'cloneDeepWith',
-    'cloneWith', 'concat', 'conformsTo', 'countBy', 'curryN', 'curryRightN',
-    'debounce', 'defaults', 'defaultsDeep', 'defaultTo', 'delay', 'difference',
-    'divide', 'drop', 'dropRight', 'dropRightWhile', 'dropWhile', 'endsWith', 'eq',
-    'every', 'filter', 'find', 'findIndex', 'findKey', 'findLast', 'findLastIndex',
-    'findLastKey', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach',
-    'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight', 'get',
-    'groupBy', 'gt', 'gte', 'has', 'hasIn', 'includes', 'indexOf', 'intersection',
-    'invertBy', 'invoke', 'invokeMap', 'isEqual', 'isMatch', 'join', 'keyBy',
-    'lastIndexOf', 'lt', 'lte', 'map', 'mapKeys', 'mapValues', 'matchesProperty',
-    'maxBy', 'meanBy', 'merge', 'mergeAllWith', 'minBy', 'multiply', 'nth', 'omit',
-    'omitBy', 'overArgs', 'pad', 'padEnd', 'padStart', 'parseInt', 'partial',
-    'partialRight', 'partition', 'pick', 'pickBy', 'propertyOf', 'pull', 'pullAll',
-    'pullAt', 'random', 'range', 'rangeRight', 'rearg', 'reject', 'remove',
-    'repeat', 'restFrom', 'result', 'sampleSize', 'some', 'sortBy', 'sortedIndex',
-    'sortedIndexOf', 'sortedLastIndex', 'sortedLastIndexOf', 'sortedUniqBy',
-    'split', 'spreadFrom', 'startsWith', 'subtract', 'sumBy', 'take', 'takeRight',
-    'takeRightWhile', 'takeWhile', 'tap', 'throttle', 'thru', 'times', 'trimChars',
-    'trimCharsEnd', 'trimCharsStart', 'truncate', 'union', 'uniqBy', 'uniqWith',
-    'unset', 'unzipWith', 'without', 'wrap', 'xor', 'zip', 'zipObject',
-    'zipObjectDeep'
-  ],
-  '3': [
-    'assignInWith', 'assignWith', 'clamp', 'differenceBy', 'differenceWith',
-    'findFrom', 'findIndexFrom', 'findLastFrom', 'findLastIndexFrom', 'getOr',
-    'includesFrom', 'indexOfFrom', 'inRange', 'intersectionBy', 'intersectionWith',
-    'invokeArgs', 'invokeArgsMap', 'isEqualWith', 'isMatchWith', 'flatMapDepth',
-    'lastIndexOfFrom', 'mergeWith', 'orderBy', 'padChars', 'padCharsEnd',
-    'padCharsStart', 'pullAllBy', 'pullAllWith', 'rangeStep', 'rangeStepRight',
-    'reduce', 'reduceRight', 'replace', 'set', 'slice', 'sortedIndexBy',
-    'sortedLastIndexBy', 'transform', 'unionBy', 'unionWith', 'update', 'xorBy',
-    'xorWith', 'zipWith'
-  ],
-  '4': [
-    'fill', 'setWith', 'updateWith'
-  ]
+var aryMethod = exports.aryMethod = {
+  '1': ['assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create', 'curry', 'curryRight', 'defaultsAll', 'defaultsDeepAll', 'floor', 'flow', 'flowRight', 'fromPairs', 'invert', 'iteratee', 'memoize', 'method', 'mergeAll', 'methodOf', 'mixin', 'nthArg', 'over', 'overEvery', 'overSome', 'rest', 'reverse', 'round', 'runInContext', 'spread', 'template', 'trim', 'trimEnd', 'trimStart', 'uniqueId', 'words', 'zipAll'],
+  '2': ['add', 'after', 'ary', 'assign', 'assignAllWith', 'assignIn', 'assignInAllWith', 'at', 'before', 'bind', 'bindAll', 'bindKey', 'chunk', 'cloneDeepWith', 'cloneWith', 'concat', 'conformsTo', 'countBy', 'curryN', 'curryRightN', 'debounce', 'defaults', 'defaultsDeep', 'defaultTo', 'delay', 'difference', 'divide', 'drop', 'dropRight', 'dropRightWhile', 'dropWhile', 'endsWith', 'eq', 'every', 'filter', 'find', 'findIndex', 'findKey', 'findLast', 'findLastIndex', 'findLastKey', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach', 'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight', 'get', 'groupBy', 'gt', 'gte', 'has', 'hasIn', 'includes', 'indexOf', 'intersection', 'invertBy', 'invoke', 'invokeMap', 'isEqual', 'isMatch', 'join', 'keyBy', 'lastIndexOf', 'lt', 'lte', 'map', 'mapKeys', 'mapValues', 'matchesProperty', 'maxBy', 'meanBy', 'merge', 'mergeAllWith', 'minBy', 'multiply', 'nth', 'omit', 'omitBy', 'overArgs', 'pad', 'padEnd', 'padStart', 'parseInt', 'partial', 'partialRight', 'partition', 'pick', 'pickBy', 'propertyOf', 'pull', 'pullAll', 'pullAt', 'random', 'range', 'rangeRight', 'rearg', 'reject', 'remove', 'repeat', 'restFrom', 'result', 'sampleSize', 'some', 'sortBy', 'sortedIndex', 'sortedIndexOf', 'sortedLastIndex', 'sortedLastIndexOf', 'sortedUniqBy', 'split', 'spreadFrom', 'startsWith', 'subtract', 'sumBy', 'take', 'takeRight', 'takeRightWhile', 'takeWhile', 'tap', 'throttle', 'thru', 'times', 'trimChars', 'trimCharsEnd', 'trimCharsStart', 'truncate', 'union', 'uniqBy', 'uniqWith', 'unset', 'unzipWith', 'without', 'wrap', 'xor', 'zip', 'zipObject', 'zipObjectDeep'],
+  '3': ['assignInWith', 'assignWith', 'clamp', 'differenceBy', 'differenceWith', 'findFrom', 'findIndexFrom', 'findLastFrom', 'findLastIndexFrom', 'getOr', 'includesFrom', 'indexOfFrom', 'inRange', 'intersectionBy', 'intersectionWith', 'invokeArgs', 'invokeArgsMap', 'isEqualWith', 'isMatchWith', 'flatMapDepth', 'lastIndexOfFrom', 'mergeWith', 'orderBy', 'padChars', 'padCharsEnd', 'padCharsStart', 'pullAllBy', 'pullAllWith', 'rangeStep', 'rangeStepRight', 'reduce', 'reduceRight', 'replace', 'set', 'slice', 'sortedIndexBy', 'sortedLastIndexBy', 'transform', 'unionBy', 'unionWith', 'update', 'xorBy', 'xorWith', 'zipWith'],
+  '4': ['fill', 'setWith', 'updateWith']
 };;
 
 /** Used to map ary to rearg configs. */
-export var aryRearg = {
+var aryRearg = exports.aryRearg = {
   '2': [1, 0],
   '3': [2, 0, 1],
   '4': [3, 2, 0, 1]
 };;
 
 /** Used to map method names to their iteratee ary. */
-export var iterateeAry = {
+var iterateeAry = exports.iterateeAry = {
   'dropRightWhile': 1,
   'dropWhile': 1,
   'every': 1,
@@ -166,13 +127,13 @@ export var iterateeAry = {
 };;
 
 /** Used to map method names to iteratee rearg configs. */
-export var iterateeRearg = {
+var iterateeRearg = exports.iterateeRearg = {
   'mapKeys': [1],
   'reduceRight': [1, 0]
 };;
 
 /** Used to map method names to rearg configs. */
-export var methodRearg = {
+var methodRearg = exports.methodRearg = {
   'assignInAllWith': [1, 0],
   'assignInWith': [1, 2, 0],
   'assignAllWith': [1, 0],
@@ -205,7 +166,7 @@ export var methodRearg = {
 };;
 
 /** Used to map method names to spread configs. */
-export var methodSpread = {
+var methodSpread = exports.methodSpread = {
   'assignAll': { 'start': 0 },
   'assignAllWith': { 'start': 0 },
   'assignInAll': { 'start': 0 },
@@ -223,7 +184,7 @@ export var methodSpread = {
 };;
 
 /** Used to identify methods which mutate arrays or objects. */
-export var mutate = {
+var mutate = exports.mutate = {
   'array': {
     'fill': true,
     'pull': true,
@@ -250,7 +211,7 @@ export var mutate = {
     'merge': true,
     'mergeAll': true,
     'mergeAllWith': true,
-    'mergeWith': true,
+    'mergeWith': true
   },
   'set': {
     'set': true,
@@ -262,7 +223,7 @@ export var mutate = {
 };;
 
 /** Used to map real names to their aliases. */
-export var realToAlias = function() {
+var realToAlias = exports.realToAlias = function () {
   var hasOwnProperty = Object.prototype.hasOwnProperty,
       object = aliasToReal,
       result = {};
@@ -279,7 +240,7 @@ export var realToAlias = function() {
 }();;
 
 /** Used to map method names to other names. */
-export var remap = {
+var remap = exports.remap = {
   'assignAll': 'assign',
   'assignAllWith': 'assignWith',
   'assignInAll': 'assignIn',
@@ -315,7 +276,7 @@ export var remap = {
 };;
 
 /** Used to track methods that skip fixing their arity. */
-export var skipFixed = {
+var skipFixed = exports.skipFixed = {
   'castArray': true,
   'flow': true,
   'flowRight': true,
@@ -326,7 +287,7 @@ export var skipFixed = {
 };;
 
 /** Used to track methods that skip rearranging arguments. */
-export var skipRearg = {
+var skipRearg = exports.skipRearg = {
   'add': true,
   'assign': true,
   'assignIn': true,

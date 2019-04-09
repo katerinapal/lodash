@@ -1,10 +1,17 @@
-export var exports;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _exports;
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2016 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 //     Underscore may be freely distributed under the MIT license.
 
-(function() {
+exports.exports = _exports;
+(function () {
 
   // Baseline setup
   // --------------
@@ -12,15 +19,14 @@ export var exports;
   // Establish the root object, `window` (`self`) in the browser, `global`
   // on the server, or `this` in some virtual machines. We use `self`
   // instead of `window` for `WebWorker` support.
-  var root = typeof self == 'object' && self.self === self && self ||
-            typeof global == 'object' && global.global === global && global ||
-            this;
+  var root = (typeof self === 'undefined' ? 'undefined' : _typeof(self)) == 'object' && self.self === self && self || (typeof global === 'undefined' ? 'undefined' : _typeof(global)) == 'object' && global.global === global && global || this;
 
   // Save the previous value of the `_` variable.
   var previousUnderscore = root._;
 
   // Save bytes in the minified (but not gzipped) version:
-  var ArrayProto = Array.prototype, ObjProto = Object.prototype;
+  var ArrayProto = Array.prototype,
+      ObjProto = Object.prototype;
   var SymbolProto = typeof Symbol !== 'undefined' ? Symbol.prototype : null;
 
   // Create quick reference variables for speed access to core prototypes.
@@ -36,10 +42,10 @@ export var exports;
       nativeCreate = Object.create;
 
   // Naked function reference for surrogate-prototype-swapping.
-  var Ctor = function(){};
+  var Ctor = function Ctor() {};
 
   // Create a safe reference to the Underscore object for use below.
-  var _ = function(obj) {
+  var _ = function _(obj) {
     if (obj instanceof _) return obj;
     if (!(this instanceof _)) return new _(obj);
     this._wrapped = obj;
@@ -50,11 +56,11 @@ export var exports;
   // the browser, add `_` as a global object.
   // (`nodeType` is checked to ensure that `module`
   // and `exports` are not HTML elements.)
-  if (typeof exports != 'undefined' && !exports.nodeType) {
+  if (typeof _exports != 'undefined' && !_exports.nodeType) {
     if (typeof module != 'undefined' && !module.nodeType && module.exports) {
-      exports = module.exports = _;
+      exports.exports = _exports = module.exports = _;
     }
-    exports._ = _;
+    _exports._ = _;
   } else {
     root._ = _;
   }
@@ -65,22 +71,25 @@ export var exports;
   // Internal function that returns an efficient (for current engines) version
   // of the passed-in callback, to be repeatedly applied in other Underscore
   // functions.
-  var optimizeCb = function(func, context, argCount) {
+  var optimizeCb = function optimizeCb(func, context, argCount) {
     if (context === void 0) return func;
     switch (argCount == null ? 3 : argCount) {
-      case 1: return function(value) {
-        return func.call(context, value);
-      };
+      case 1:
+        return function (value) {
+          return func.call(context, value);
+        };
       // The 2-parameter case has been omitted only because no current consumers
       // made use of it.
-      case 3: return function(value, index, collection) {
-        return func.call(context, value, index, collection);
-      };
-      case 4: return function(accumulator, value, index, collection) {
-        return func.call(context, accumulator, value, index, collection);
-      };
+      case 3:
+        return function (value, index, collection) {
+          return func.call(context, value, index, collection);
+        };
+      case 4:
+        return function (accumulator, value, index, collection) {
+          return func.call(context, accumulator, value, index, collection);
+        };
     }
-    return function() {
+    return function () {
       return func.apply(context, arguments);
     };
   };
@@ -90,7 +99,7 @@ export var exports;
   // An internal function to generate callbacks that can be applied to each
   // element in a collection, returning the desired result — either `identity`,
   // an arbitrary callback, a property matcher, or a property accessor.
-  var cb = function(value, context, argCount) {
+  var cb = function cb(value, context, argCount) {
     if (_.iteratee !== builtinIteratee) return _.iteratee(value, context);
     if (value == null) return _.identity;
     if (_.isFunction(value)) return optimizeCb(value, context, argCount);
@@ -101,24 +110,27 @@ export var exports;
   // External wrapper for our callback generator. Users may customize
   // `_.iteratee` if they want additional predicate/iteratee shorthand styles.
   // This abstraction hides the internal-only argCount argument.
-  _.iteratee = builtinIteratee = function(value, context) {
+  _.iteratee = builtinIteratee = function builtinIteratee(value, context) {
     return cb(value, context, Infinity);
   };
 
   // Similar to ES6's rest param (http://ariya.ofilabs.com/2013/03/es6-and-rest-parameter.html)
   // This accumulates the arguments passed into an array, after a given index.
-  var restArgs = function(func, startIndex) {
+  var restArgs = function restArgs(func, startIndex) {
     startIndex = startIndex == null ? func.length - 1 : +startIndex;
-    return function() {
+    return function () {
       var length = Math.max(arguments.length - startIndex, 0);
       var rest = Array(length);
       for (var index = 0; index < length; index++) {
         rest[index] = arguments[index + startIndex];
       }
       switch (startIndex) {
-        case 0: return func.call(this, rest);
-        case 1: return func.call(this, arguments[0], rest);
-        case 2: return func.call(this, arguments[0], arguments[1], rest);
+        case 0:
+          return func.call(this, rest);
+        case 1:
+          return func.call(this, arguments[0], rest);
+        case 2:
+          return func.call(this, arguments[0], arguments[1], rest);
       }
       var args = Array(startIndex + 1);
       for (index = 0; index < startIndex; index++) {
@@ -130,17 +142,17 @@ export var exports;
   };
 
   // An internal function for creating a new object that inherits from another.
-  var baseCreate = function(prototype) {
+  var baseCreate = function baseCreate(prototype) {
     if (!_.isObject(prototype)) return {};
     if (nativeCreate) return nativeCreate(prototype);
     Ctor.prototype = prototype;
-    var result = new Ctor;
+    var result = new Ctor();
     Ctor.prototype = null;
     return result;
   };
 
-  var property = function(key) {
-    return function(obj) {
+  var property = function property(key) {
+    return function (obj) {
       return obj == null ? void 0 : obj[key];
     };
   };
@@ -151,7 +163,7 @@ export var exports;
   // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
   var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
   var getLength = property('length');
-  var isArrayLike = function(collection) {
+  var isArrayLike = function isArrayLike(collection) {
     var length = getLength(collection);
     return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
   };
@@ -162,7 +174,7 @@ export var exports;
   // The cornerstone, an `each` implementation, aka `forEach`.
   // Handles raw objects in addition to array-likes. Treats all
   // sparse array-likes as if they were dense.
-  _.each = _.forEach = function(obj, iteratee, context) {
+  _.each = _.forEach = function (obj, iteratee, context) {
     iteratee = optimizeCb(iteratee, context);
     var i, length;
     if (isArrayLike(obj)) {
@@ -179,7 +191,7 @@ export var exports;
   };
 
   // Return the results of applying the iteratee to each element.
-  _.map = _.collect = function(obj, iteratee, context) {
+  _.map = _.collect = function (obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     var keys = !isArrayLike(obj) && _.keys(obj),
         length = (keys || obj).length,
@@ -192,10 +204,10 @@ export var exports;
   };
 
   // Create a reducing function iterating left or right.
-  var createReduce = function(dir) {
+  var createReduce = function createReduce(dir) {
     // Wrap code that reassigns argument variables in a separate function than
     // the one that accesses `arguments.length` to avoid a perf hit. (#1991)
-    var reducer = function(obj, iteratee, memo, initial) {
+    var reducer = function reducer(obj, iteratee, memo, initial) {
       var keys = !isArrayLike(obj) && _.keys(obj),
           length = (keys || obj).length,
           index = dir > 0 ? 0 : length - 1;
@@ -210,7 +222,7 @@ export var exports;
       return memo;
     };
 
-    return function(obj, iteratee, memo, context) {
+    return function (obj, iteratee, memo, context) {
       var initial = arguments.length >= 3;
       return reducer(obj, optimizeCb(iteratee, context, 4), memo, initial);
     };
@@ -224,7 +236,7 @@ export var exports;
   _.reduceRight = _.foldr = createReduce(-1);
 
   // Return the first value which passes a truth test. Aliased as `detect`.
-  _.find = _.detect = function(obj, predicate, context) {
+  _.find = _.detect = function (obj, predicate, context) {
     var keyFinder = isArrayLike(obj) ? _.findIndex : _.findKey;
     var key = keyFinder(obj, predicate, context);
     if (key !== void 0 && key !== -1) return obj[key];
@@ -232,23 +244,23 @@ export var exports;
 
   // Return all the elements that pass a truth test.
   // Aliased as `select`.
-  _.filter = _.select = function(obj, predicate, context) {
+  _.filter = _.select = function (obj, predicate, context) {
     var results = [];
     predicate = cb(predicate, context);
-    _.each(obj, function(value, index, list) {
+    _.each(obj, function (value, index, list) {
       if (predicate(value, index, list)) results.push(value);
     });
     return results;
   };
 
   // Return all the elements for which a truth test fails.
-  _.reject = function(obj, predicate, context) {
+  _.reject = function (obj, predicate, context) {
     return _.filter(obj, _.negate(cb(predicate)), context);
   };
 
   // Determine whether all of the elements match a truth test.
   // Aliased as `all`.
-  _.every = _.all = function(obj, predicate, context) {
+  _.every = _.all = function (obj, predicate, context) {
     predicate = cb(predicate, context);
     var keys = !isArrayLike(obj) && _.keys(obj),
         length = (keys || obj).length;
@@ -261,7 +273,7 @@ export var exports;
 
   // Determine if at least one element in the object matches a truth test.
   // Aliased as `any`.
-  _.some = _.any = function(obj, predicate, context) {
+  _.some = _.any = function (obj, predicate, context) {
     predicate = cb(predicate, context);
     var keys = !isArrayLike(obj) && _.keys(obj),
         length = (keys || obj).length;
@@ -274,43 +286,45 @@ export var exports;
 
   // Determine if the array or object contains a given item (using `===`).
   // Aliased as `includes` and `include`.
-  _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
+  _.contains = _.includes = _.include = function (obj, item, fromIndex, guard) {
     if (!isArrayLike(obj)) obj = _.values(obj);
     if (typeof fromIndex != 'number' || guard) fromIndex = 0;
     return _.indexOf(obj, item, fromIndex) >= 0;
   };
 
   // Invoke a method (with arguments) on every item in a collection.
-  _.invoke = restArgs(function(obj, method, args) {
+  _.invoke = restArgs(function (obj, method, args) {
     var isFunc = _.isFunction(method);
-    return _.map(obj, function(value) {
+    return _.map(obj, function (value) {
       var func = isFunc ? method : value[method];
       return func == null ? func : func.apply(value, args);
     });
   });
 
   // Convenience version of a common use case of `map`: fetching a property.
-  _.pluck = function(obj, key) {
+  _.pluck = function (obj, key) {
     return _.map(obj, _.property(key));
   };
 
   // Convenience version of a common use case of `filter`: selecting only objects
   // containing specific `key:value` pairs.
-  _.where = function(obj, attrs) {
+  _.where = function (obj, attrs) {
     return _.filter(obj, _.matcher(attrs));
   };
 
   // Convenience version of a common use case of `find`: getting the first object
   // containing specific `key:value` pairs.
-  _.findWhere = function(obj, attrs) {
+  _.findWhere = function (obj, attrs) {
     return _.find(obj, _.matcher(attrs));
   };
 
   // Return the maximum element (or element-based computation).
-  _.max = function(obj, iteratee, context) {
-    var result = -Infinity, lastComputed = -Infinity,
-        value, computed;
-    if (iteratee == null || (typeof iteratee == 'number' && typeof obj[0] != 'object') && obj != null) {
+  _.max = function (obj, iteratee, context) {
+    var result = -Infinity,
+        lastComputed = -Infinity,
+        value,
+        computed;
+    if (iteratee == null || typeof iteratee == 'number' && _typeof(obj[0]) != 'object' && obj != null) {
       obj = isArrayLike(obj) ? obj : _.values(obj);
       for (var i = 0, length = obj.length; i < length; i++) {
         value = obj[i];
@@ -320,7 +334,7 @@ export var exports;
       }
     } else {
       iteratee = cb(iteratee, context);
-      _.each(obj, function(v, index, list) {
+      _.each(obj, function (v, index, list) {
         computed = iteratee(v, index, list);
         if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
           result = v;
@@ -332,10 +346,12 @@ export var exports;
   };
 
   // Return the minimum element (or element-based computation).
-  _.min = function(obj, iteratee, context) {
-    var result = Infinity, lastComputed = Infinity,
-        value, computed;
-    if (iteratee == null || (typeof iteratee == 'number' && typeof obj[0] != 'object') && obj != null) {
+  _.min = function (obj, iteratee, context) {
+    var result = Infinity,
+        lastComputed = Infinity,
+        value,
+        computed;
+    if (iteratee == null || typeof iteratee == 'number' && _typeof(obj[0]) != 'object' && obj != null) {
       obj = isArrayLike(obj) ? obj : _.values(obj);
       for (var i = 0, length = obj.length; i < length; i++) {
         value = obj[i];
@@ -345,7 +361,7 @@ export var exports;
       }
     } else {
       iteratee = cb(iteratee, context);
-      _.each(obj, function(v, index, list) {
+      _.each(obj, function (v, index, list) {
         computed = iteratee(v, index, list);
         if (computed < lastComputed || computed === Infinity && result === Infinity) {
           result = v;
@@ -357,7 +373,7 @@ export var exports;
   };
 
   // Shuffle a collection.
-  _.shuffle = function(obj) {
+  _.shuffle = function (obj) {
     return _.sample(obj, Infinity);
   };
 
@@ -365,7 +381,7 @@ export var exports;
   // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
   // If **n** is not specified, returns a single random element.
   // The internal `guard` argument allows it to work with `map`.
-  _.sample = function(obj, n, guard) {
+  _.sample = function (obj, n, guard) {
     if (n == null || guard) {
       if (!isArrayLike(obj)) obj = _.values(obj);
       return obj[_.random(obj.length - 1)];
@@ -384,16 +400,16 @@ export var exports;
   };
 
   // Sort the object's values by a criterion produced by an iteratee.
-  _.sortBy = function(obj, iteratee, context) {
+  _.sortBy = function (obj, iteratee, context) {
     var index = 0;
     iteratee = cb(iteratee, context);
-    return _.pluck(_.map(obj, function(value, key, list) {
+    return _.pluck(_.map(obj, function (value, key, list) {
       return {
         value: value,
         index: index++,
         criteria: iteratee(value, key, list)
       };
-    }).sort(function(left, right) {
+    }).sort(function (left, right) {
       var a = left.criteria;
       var b = right.criteria;
       if (a !== b) {
@@ -405,11 +421,11 @@ export var exports;
   };
 
   // An internal function used for aggregate "group by" operations.
-  var group = function(behavior, partition) {
-    return function(obj, iteratee, context) {
+  var group = function group(behavior, partition) {
+    return function (obj, iteratee, context) {
       var result = partition ? [[], []] : {};
       iteratee = cb(iteratee, context);
-      _.each(obj, function(value, index) {
+      _.each(obj, function (value, index) {
         var key = iteratee(value, index, obj);
         behavior(result, value, key);
       });
@@ -419,26 +435,26 @@ export var exports;
 
   // Groups the object's values by a criterion. Pass either a string attribute
   // to group by, or a function that returns the criterion.
-  _.groupBy = group(function(result, value, key) {
-    if (_.has(result, key)) result[key].push(value); else result[key] = [value];
+  _.groupBy = group(function (result, value, key) {
+    if (_.has(result, key)) result[key].push(value);else result[key] = [value];
   });
 
   // Indexes the object's values by a criterion, similar to `groupBy`, but for
   // when you know that your index values will be unique.
-  _.indexBy = group(function(result, value, key) {
+  _.indexBy = group(function (result, value, key) {
     result[key] = value;
   });
 
   // Counts instances of an object that group by a certain criterion. Pass
   // either a string attribute to count by, or a function that returns the
   // criterion.
-  _.countBy = group(function(result, value, key) {
-    if (_.has(result, key)) result[key]++; else result[key] = 1;
+  _.countBy = group(function (result, value, key) {
+    if (_.has(result, key)) result[key]++;else result[key] = 1;
   });
 
   var reStrSymbol = /[^\ud800-\udfff]|[\ud800-\udbff][\udc00-\udfff]|[\ud800-\udfff]/g;
   // Safely create a real, live array from anything iterable.
-  _.toArray = function(obj) {
+  _.toArray = function (obj) {
     if (!obj) return [];
     if (_.isArray(obj)) return slice.call(obj);
     if (_.isString(obj)) {
@@ -450,14 +466,14 @@ export var exports;
   };
 
   // Return the number of elements in an object.
-  _.size = function(obj) {
+  _.size = function (obj) {
     if (obj == null) return 0;
     return isArrayLike(obj) ? obj.length : _.keys(obj).length;
   };
 
   // Split a collection into two arrays: one whose elements all satisfy the given
   // predicate, and one whose elements all do not satisfy the predicate.
-  _.partition = group(function(result, value, pass) {
+  _.partition = group(function (result, value, pass) {
     result[pass ? 0 : 1].push(value);
   }, true);
 
@@ -467,7 +483,7 @@ export var exports;
   // Get the first element of an array. Passing **n** will return the first N
   // values in the array. Aliased as `head` and `take`. The **guard** check
   // allows it to work with `_.map`.
-  _.first = _.head = _.take = function(array, n, guard) {
+  _.first = _.head = _.take = function (array, n, guard) {
     if (array == null || array.length < 1) return void 0;
     if (n == null || guard) return array[0];
     return _.initial(array, array.length - n);
@@ -476,13 +492,13 @@ export var exports;
   // Returns everything but the last entry of the array. Especially useful on
   // the arguments object. Passing **n** will return all the values in
   // the array, excluding the last N.
-  _.initial = function(array, n, guard) {
+  _.initial = function (array, n, guard) {
     return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
   };
 
   // Get the last element of an array. Passing **n** will return the last N
   // values in the array.
-  _.last = function(array, n, guard) {
+  _.last = function (array, n, guard) {
     if (array == null || array.length < 1) return void 0;
     if (n == null || guard) return array[array.length - 1];
     return _.rest(array, Math.max(0, array.length - n));
@@ -491,17 +507,17 @@ export var exports;
   // Returns everything but the first entry of the array. Aliased as `tail` and `drop`.
   // Especially useful on the arguments object. Passing an **n** will return
   // the rest N values in the array.
-  _.rest = _.tail = _.drop = function(array, n, guard) {
+  _.rest = _.tail = _.drop = function (array, n, guard) {
     return slice.call(array, n == null || guard ? 1 : n);
   };
 
   // Trim out all falsy values from an array.
-  _.compact = function(array) {
+  _.compact = function (array) {
     return _.filter(array, Boolean);
   };
 
   // Internal implementation of a recursive `flatten` function.
-  var flatten = function(input, shallow, strict, output) {
+  var flatten = function flatten(input, shallow, strict, output) {
     output = output || [];
     var idx = output.length;
     for (var i = 0, length = getLength(input); i < length; i++) {
@@ -509,8 +525,11 @@ export var exports;
       if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
         // Flatten current level of array or arguments object.
         if (shallow) {
-          var j = 0, len = value.length;
-          while (j < len) output[idx++] = value[j++];
+          var j = 0,
+              len = value.length;
+          while (j < len) {
+            output[idx++] = value[j++];
+          }
         } else {
           flatten(value, shallow, strict, output);
           idx = output.length;
@@ -523,19 +542,19 @@ export var exports;
   };
 
   // Flatten out an array, either recursively (by default), or just one level.
-  _.flatten = function(array, shallow) {
+  _.flatten = function (array, shallow) {
     return flatten(array, shallow, false);
   };
 
   // Return a version of the array that does not contain the specified value(s).
-  _.without = restArgs(function(array, otherArrays) {
+  _.without = restArgs(function (array, otherArrays) {
     return _.difference(array, otherArrays);
   });
 
   // Produce a duplicate-free version of the array. If the array has already
   // been sorted, you have the option of using a faster algorithm.
   // Aliased as `unique`.
-  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
+  _.uniq = _.unique = function (array, isSorted, iteratee, context) {
     if (!_.isBoolean(isSorted)) {
       context = iteratee;
       iteratee = isSorted;
@@ -564,13 +583,13 @@ export var exports;
 
   // Produce an array that contains the union: each distinct element from all of
   // the passed-in arrays.
-  _.union = restArgs(function(arrays) {
+  _.union = restArgs(function (arrays) {
     return _.uniq(flatten(arrays, true, true));
   });
 
   // Produce an array that contains every item shared between all the
   // passed-in arrays.
-  _.intersection = function(array) {
+  _.intersection = function (array) {
     var result = [];
     var argsLength = arguments.length;
     for (var i = 0, length = getLength(array); i < length; i++) {
@@ -587,16 +606,16 @@ export var exports;
 
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
-  _.difference = restArgs(function(array, rest) {
+  _.difference = restArgs(function (array, rest) {
     rest = flatten(rest, true, true);
-    return _.filter(array, function(value){
+    return _.filter(array, function (value) {
       return !_.contains(rest, value);
     });
   });
 
   // Complement of _.zip. Unzip accepts an array of arrays and groups
   // each array's elements on shared indices.
-  _.unzip = function(array) {
+  _.unzip = function (array) {
     var length = array && _.max(array, getLength).length || 0;
     var result = Array(length);
 
@@ -613,7 +632,7 @@ export var exports;
   // Converts lists into objects. Pass either a single array of `[key, value]`
   // pairs, or two parallel arrays of the same length -- one of keys, and one of
   // the corresponding values.
-  _.object = function(list, values) {
+  _.object = function (list, values) {
     var result = {};
     for (var i = 0, length = getLength(list); i < length; i++) {
       if (values) {
@@ -626,8 +645,8 @@ export var exports;
   };
 
   // Generator function to create the findIndex and findLastIndex functions.
-  var createPredicateIndexFinder = function(dir) {
-    return function(array, predicate, context) {
+  var createPredicateIndexFinder = function createPredicateIndexFinder(dir) {
+    return function (array, predicate, context) {
       predicate = cb(predicate, context);
       var length = getLength(array);
       var index = dir > 0 ? 0 : length - 1;
@@ -644,21 +663,23 @@ export var exports;
 
   // Use a comparator function to figure out the smallest index at which
   // an object should be inserted so as to maintain order. Uses binary search.
-  _.sortedIndex = function(array, obj, iteratee, context) {
+  _.sortedIndex = function (array, obj, iteratee, context) {
     iteratee = cb(iteratee, context, 1);
     var value = iteratee(obj);
-    var low = 0, high = getLength(array);
+    var low = 0,
+        high = getLength(array);
     while (low < high) {
       var mid = Math.floor((low + high) / 2);
-      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
+      if (iteratee(array[mid]) < value) low = mid + 1;else high = mid;
     }
     return low;
   };
 
   // Generator function to create the indexOf and lastIndexOf functions.
-  var createIndexFinder = function(dir, predicateFind, sortedIndex) {
-    return function(array, item, idx) {
-      var i = 0, length = getLength(array);
+  var createIndexFinder = function createIndexFinder(dir, predicateFind, sortedIndex) {
+    return function (array, item, idx) {
+      var i = 0,
+          length = getLength(array);
       if (typeof idx == 'number') {
         if (dir > 0) {
           i = idx >= 0 ? idx : Math.max(idx + length, i);
@@ -690,7 +711,7 @@ export var exports;
   // Generate an integer Array containing an arithmetic progression. A port of
   // the native Python `range()` function. See
   // [the Python documentation](http://docs.python.org/library/functions.html#range).
-  _.range = function(start, stop, step) {
+  _.range = function (start, stop, step) {
     if (stop == null) {
       stop = start || 0;
       start = 0;
@@ -711,11 +732,12 @@ export var exports;
 
   // Split an **array** into several arrays containing **count** or less elements
   // of initial array.
-  _.chunk = function(array, count) {
+  _.chunk = function (array, count) {
     if (count == null || count < 1) return [];
 
     var result = [];
-    var i = 0, length = array.length;
+    var i = 0,
+        length = array.length;
     while (i < length) {
       result.push(slice.call(array, i, i += count));
     }
@@ -727,7 +749,7 @@ export var exports;
 
   // Determines whether to execute a function as a constructor
   // or a normal function with the provided arguments.
-  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
+  var executeBound = function executeBound(sourceFunc, boundFunc, context, callingContext, args) {
     if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
     var self = baseCreate(sourceFunc.prototype);
     var result = sourceFunc.apply(self, args);
@@ -738,9 +760,9 @@ export var exports;
   // Create a function bound to a given object (assigning `this`, and arguments,
   // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
   // available.
-  _.bind = restArgs(function(func, context, args) {
+  _.bind = restArgs(function (func, context, args) {
     if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
-    var bound = restArgs(function(callArgs) {
+    var bound = restArgs(function (callArgs) {
       return executeBound(func, bound, context, this, args.concat(callArgs));
     });
     return bound;
@@ -750,16 +772,18 @@ export var exports;
   // arguments pre-filled, without changing its dynamic `this` context. _ acts
   // as a placeholder by default, allowing any combination of arguments to be
   // pre-filled. Set `_.partial.placeholder` for a custom placeholder argument.
-  _.partial = restArgs(function(func, boundArgs) {
+  _.partial = restArgs(function (func, boundArgs) {
     var placeholder = _.partial.placeholder;
-    var bound = function() {
-      var position = 0, length = boundArgs.length;
+    var bound = function bound() {
+      var position = 0,
+          length = boundArgs.length;
       var args = Array(length);
       for (var i = 0; i < length; i++) {
         args[i] = boundArgs[i] === placeholder ? arguments[position++] : boundArgs[i];
       }
-      while (position < arguments.length) args.push(arguments[position++]);
-      return executeBound(func, bound, this, this, args);
+      while (position < arguments.length) {
+        args.push(arguments[position++]);
+      }return executeBound(func, bound, this, this, args);
     };
     return bound;
   });
@@ -769,7 +793,7 @@ export var exports;
   // Bind a number of an object's methods to that object. Remaining arguments
   // are the method names to be bound. Useful for ensuring that all callbacks
   // defined on an object belong to it.
-  _.bindAll = restArgs(function(obj, keys) {
+  _.bindAll = restArgs(function (obj, keys) {
     keys = flatten(keys, false, false);
     var index = keys.length;
     if (index < 1) throw new Error('bindAll must be passed function names');
@@ -780,8 +804,8 @@ export var exports;
   });
 
   // Memoize an expensive function by storing its results.
-  _.memoize = function(func, hasher) {
-    var memoize = function(key) {
+  _.memoize = function (func, hasher) {
+    var memoize = function memoize(key) {
       var cache = memoize.cache;
       var address = '' + (hasher ? hasher.apply(this, arguments) : key);
       if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
@@ -793,8 +817,8 @@ export var exports;
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
-  _.delay = restArgs(function(func, wait, args) {
-    return setTimeout(function() {
+  _.delay = restArgs(function (func, wait, args) {
+    return setTimeout(function () {
       return func.apply(null, args);
     }, wait);
   });
@@ -808,19 +832,19 @@ export var exports;
   // as much as it can, without ever going more than once per `wait` duration;
   // but if you'd like to disable the execution on the leading edge, pass
   // `{leading: false}`. To disable execution on the trailing edge, ditto.
-  _.throttle = function(func, wait, options) {
+  _.throttle = function (func, wait, options) {
     var timeout, context, args, result;
     var previous = 0;
     if (!options) options = {};
 
-    var later = function() {
+    var later = function later() {
       previous = options.leading === false ? 0 : _.now();
       timeout = null;
       result = func.apply(context, args);
       if (!timeout) context = args = null;
     };
 
-    var throttled = function() {
+    var throttled = function throttled() {
       var now = _.now();
       if (!previous && options.leading === false) previous = now;
       var remaining = wait - (now - previous);
@@ -840,7 +864,7 @@ export var exports;
       return result;
     };
 
-    throttled.cancel = function() {
+    throttled.cancel = function () {
       clearTimeout(timeout);
       previous = 0;
       timeout = context = args = null;
@@ -853,15 +877,15 @@ export var exports;
   // be triggered. The function will be called after it stops being called for
   // N milliseconds. If `immediate` is passed, trigger the function on the
   // leading edge, instead of the trailing.
-  _.debounce = function(func, wait, immediate) {
+  _.debounce = function (func, wait, immediate) {
     var timeout, result;
 
-    var later = function(context, args) {
+    var later = function later(context, args) {
       timeout = null;
       if (args) result = func.apply(context, args);
     };
 
-    var debounced = restArgs(function(args) {
+    var debounced = restArgs(function (args) {
       if (timeout) clearTimeout(timeout);
       if (immediate) {
         var callNow = !timeout;
@@ -874,7 +898,7 @@ export var exports;
       return result;
     });
 
-    debounced.cancel = function() {
+    debounced.cancel = function () {
       clearTimeout(timeout);
       timeout = null;
     };
@@ -885,33 +909,34 @@ export var exports;
   // Returns the first function passed as an argument to the second,
   // allowing you to adjust arguments, run code before and after, and
   // conditionally execute the original function.
-  _.wrap = function(func, wrapper) {
+  _.wrap = function (func, wrapper) {
     return _.partial(wrapper, func);
   };
 
   // Returns a negated version of the passed-in predicate.
-  _.negate = function(predicate) {
-    return function() {
+  _.negate = function (predicate) {
+    return function () {
       return !predicate.apply(this, arguments);
     };
   };
 
   // Returns a function that is the composition of a list of functions, each
   // consuming the return value of the function that follows.
-  _.compose = function() {
+  _.compose = function () {
     var args = arguments;
     var start = args.length - 1;
-    return function() {
+    return function () {
       var i = start;
       var result = args[start].apply(this, arguments);
-      while (i--) result = args[i].call(this, result);
-      return result;
+      while (i--) {
+        result = args[i].call(this, result);
+      }return result;
     };
   };
 
   // Returns a function that will only be executed on and after the Nth call.
-  _.after = function(times, func) {
-    return function() {
+  _.after = function (times, func) {
+    return function () {
       if (--times < 1) {
         return func.apply(this, arguments);
       }
@@ -919,9 +944,9 @@ export var exports;
   };
 
   // Returns a function that will only be executed up to (but not including) the Nth call.
-  _.before = function(times, func) {
+  _.before = function (times, func) {
     var memo;
-    return function() {
+    return function () {
       if (--times > 0) {
         memo = func.apply(this, arguments);
       }
@@ -940,11 +965,10 @@ export var exports;
   // ----------------
 
   // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
-  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
-  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
-                      'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+  var hasEnumBug = !{ toString: null }.propertyIsEnumerable('toString');
+  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
 
-  var collectNonEnumProps = function(obj, keys) {
+  var collectNonEnumProps = function collectNonEnumProps(obj, keys) {
     var nonEnumIdx = nonEnumerableProps.length;
     var constructor = obj.constructor;
     var proto = _.isFunction(constructor) && constructor.prototype || ObjProto;
@@ -963,28 +987,30 @@ export var exports;
 
   // Retrieve the names of an object's own properties.
   // Delegates to **ECMAScript 5**'s native `Object.keys`.
-  _.keys = function(obj) {
+  _.keys = function (obj) {
     if (!_.isObject(obj)) return [];
     if (nativeKeys) return nativeKeys(obj);
     var keys = [];
-    for (var key in obj) if (_.has(obj, key)) keys.push(key);
-    // Ahem, IE < 9.
+    for (var key in obj) {
+      if (_.has(obj, key)) keys.push(key);
+    } // Ahem, IE < 9.
     if (hasEnumBug) collectNonEnumProps(obj, keys);
     return keys;
   };
 
   // Retrieve all the property names of an object.
-  _.allKeys = function(obj) {
+  _.allKeys = function (obj) {
     if (!_.isObject(obj)) return [];
     var keys = [];
-    for (var key in obj) keys.push(key);
-    // Ahem, IE < 9.
+    for (var key in obj) {
+      keys.push(key);
+    } // Ahem, IE < 9.
     if (hasEnumBug) collectNonEnumProps(obj, keys);
     return keys;
   };
 
   // Retrieve the values of an object's properties.
-  _.values = function(obj) {
+  _.values = function (obj) {
     var keys = _.keys(obj);
     var length = keys.length;
     var values = Array(length);
@@ -996,7 +1022,7 @@ export var exports;
 
   // Returns the results of applying the iteratee to each element of the object.
   // In contrast to _.map it returns an object.
-  _.mapObject = function(obj, iteratee, context) {
+  _.mapObject = function (obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     var keys = _.keys(obj),
         length = keys.length,
@@ -1009,7 +1035,7 @@ export var exports;
   };
 
   // Convert an object into a list of `[key, value]` pairs.
-  _.pairs = function(obj) {
+  _.pairs = function (obj) {
     var keys = _.keys(obj);
     var length = keys.length;
     var pairs = Array(length);
@@ -1020,7 +1046,7 @@ export var exports;
   };
 
   // Invert the keys and values of an object. The values must be serializable.
-  _.invert = function(obj) {
+  _.invert = function (obj) {
     var result = {};
     var keys = _.keys(obj);
     for (var i = 0, length = keys.length; i < length; i++) {
@@ -1031,7 +1057,7 @@ export var exports;
 
   // Return a sorted list of the function names available on the object.
   // Aliased as `methods`.
-  _.functions = _.methods = function(obj) {
+  _.functions = _.methods = function (obj) {
     var names = [];
     for (var key in obj) {
       if (_.isFunction(obj[key])) names.push(key);
@@ -1040,8 +1066,8 @@ export var exports;
   };
 
   // An internal function for creating assigner functions.
-  var createAssigner = function(keysFunc, defaults) {
-    return function(obj) {
+  var createAssigner = function createAssigner(keysFunc, defaults) {
+    return function (obj) {
       var length = arguments.length;
       if (defaults) obj = Object(obj);
       if (length < 2 || obj == null) return obj;
@@ -1066,9 +1092,10 @@ export var exports;
   _.extendOwn = _.assign = createAssigner(_.keys);
 
   // Returns the first key on an object that passes a predicate test.
-  _.findKey = function(obj, predicate, context) {
+  _.findKey = function (obj, predicate, context) {
     predicate = cb(predicate, context);
-    var keys = _.keys(obj), key;
+    var keys = _.keys(obj),
+        key;
     for (var i = 0, length = keys.length; i < length; i++) {
       key = keys[i];
       if (predicate(obj[key], key, obj)) return key;
@@ -1076,13 +1103,14 @@ export var exports;
   };
 
   // Internal pick helper function to determine if `obj` has key `key`.
-  var keyInObj = function(value, key, obj) {
+  var keyInObj = function keyInObj(value, key, obj) {
     return key in obj;
   };
 
   // Return a copy of the object only containing the whitelisted properties.
-  _.pick = restArgs(function(obj, keys) {
-    var result = {}, iteratee = keys[0];
+  _.pick = restArgs(function (obj, keys) {
+    var result = {},
+        iteratee = keys[0];
     if (obj == null) return result;
     if (_.isFunction(iteratee)) {
       if (keys.length > 1) iteratee = optimizeCb(iteratee, keys[1]);
@@ -1101,14 +1129,15 @@ export var exports;
   });
 
   // Return a copy of the object without the blacklisted properties.
-  _.omit = restArgs(function(obj, keys) {
-    var iteratee = keys[0], context;
+  _.omit = restArgs(function (obj, keys) {
+    var iteratee = keys[0],
+        context;
     if (_.isFunction(iteratee)) {
       iteratee = _.negate(iteratee);
       if (keys.length > 1) context = keys[1];
     } else {
       keys = _.map(flatten(keys, false, false), String);
-      iteratee = function(value, key) {
+      iteratee = function iteratee(value, key) {
         return !_.contains(keys, key);
       };
     }
@@ -1121,14 +1150,14 @@ export var exports;
   // Creates an object that inherits from the given prototype object.
   // If additional properties are provided then they will be added to the
   // created object.
-  _.create = function(prototype, props) {
+  _.create = function (prototype, props) {
     var result = baseCreate(prototype);
     if (props) _.extendOwn(result, props);
     return result;
   };
 
   // Create a (shallow-cloned) duplicate of an object.
-  _.clone = function(obj) {
+  _.clone = function (obj) {
     if (!_.isObject(obj)) return obj;
     return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
   };
@@ -1136,14 +1165,15 @@ export var exports;
   // Invokes interceptor with the obj, and then returns obj.
   // The primary purpose of this method is to "tap into" a method chain, in
   // order to perform operations on intermediate results within the chain.
-  _.tap = function(obj, interceptor) {
+  _.tap = function (obj, interceptor) {
     interceptor(obj);
     return obj;
   };
 
   // Returns whether an object has a given set of `key:value` pairs.
-  _.isMatch = function(object, attrs) {
-    var keys = _.keys(attrs), length = keys.length;
+  _.isMatch = function (object, attrs) {
+    var keys = _.keys(attrs),
+        length = keys.length;
     if (object == null) return !length;
     var obj = Object(object);
     for (var i = 0; i < length; i++) {
@@ -1153,10 +1183,9 @@ export var exports;
     return true;
   };
 
-
   // Internal recursive comparison function for `isEqual`.
   var eq, deepEq;
-  eq = function(a, b, aStack, bStack) {
+  eq = function eq(a, b, aStack, bStack) {
     // Identical objects are equal. `0 === -0`, but they aren't identical.
     // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
     if (a === b) return a !== 0 || 1 / a === 1 / b;
@@ -1165,13 +1194,13 @@ export var exports;
     // `NaN`s are equivalent, but non-reflexive.
     if (a !== a) return b !== b;
     // Exhaust primitive checks
-    var type = typeof a;
-    if (type !== 'function' && type !== 'object' && typeof b != 'object') return false;
+    var type = typeof a === 'undefined' ? 'undefined' : _typeof(a);
+    if (type !== 'function' && type !== 'object' && (typeof b === 'undefined' ? 'undefined' : _typeof(b)) != 'object') return false;
     return deepEq(a, b, aStack, bStack);
   };
 
   // Internal recursive comparison function for `isEqual`.
-  deepEq = function(a, b, aStack, bStack) {
+  deepEq = function deepEq(a, b, aStack, bStack) {
     // Unwrap any wrapped objects.
     if (a instanceof _) a = a._wrapped;
     if (b instanceof _) b = b._wrapped;
@@ -1204,14 +1233,13 @@ export var exports;
 
     var areArrays = className === '[object Array]';
     if (!areArrays) {
-      if (typeof a != 'object' || typeof b != 'object') return false;
+      if ((typeof a === 'undefined' ? 'undefined' : _typeof(a)) != 'object' || (typeof b === 'undefined' ? 'undefined' : _typeof(b)) != 'object') return false;
 
       // Objects with different constructors are not equivalent, but `Object`s or `Array`s
       // from different frames are.
-      var aCtor = a.constructor, bCtor = b.constructor;
-      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
-                               _.isFunction(bCtor) && bCtor instanceof bCtor)
-                          && ('constructor' in a && 'constructor' in b)) {
+      var aCtor = a.constructor,
+          bCtor = b.constructor;
+      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor && _.isFunction(bCtor) && bCtor instanceof bCtor) && 'constructor' in a && 'constructor' in b) {
         return false;
       }
     }
@@ -1244,7 +1272,8 @@ export var exports;
       }
     } else {
       // Deep compare objects.
-      var keys = _.keys(a), key;
+      var keys = _.keys(a),
+          key;
       length = keys.length;
       // Ensure that both objects contain the same number of properties before comparing deep equality.
       if (_.keys(b).length !== length) return false;
@@ -1261,38 +1290,38 @@ export var exports;
   };
 
   // Perform a deep comparison to check if two objects are equal.
-  _.isEqual = function(a, b) {
+  _.isEqual = function (a, b) {
     return eq(a, b);
   };
 
   // Is a given array, string, or object empty?
   // An "empty" object has no enumerable own-properties.
-  _.isEmpty = function(obj) {
+  _.isEmpty = function (obj) {
     if (obj == null) return true;
     if (isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || _.isArguments(obj))) return obj.length === 0;
     return _.keys(obj).length === 0;
   };
 
   // Is a given value a DOM element?
-  _.isElement = function(obj) {
+  _.isElement = function (obj) {
     return !!(obj && obj.nodeType === 1);
   };
 
   // Is a given value an array?
   // Delegates to ECMA5's native Array.isArray
-  _.isArray = nativeIsArray || function(obj) {
+  _.isArray = nativeIsArray || function (obj) {
     return toString.call(obj) === '[object Array]';
   };
 
   // Is a given variable an object?
-  _.isObject = function(obj) {
-    var type = typeof obj;
+  _.isObject = function (obj) {
+    var type = typeof obj === 'undefined' ? 'undefined' : _typeof(obj);
     return type === 'function' || type === 'object' && !!obj;
   };
 
   // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError, isMap, isWeakMap, isSet, isWeakSet.
-  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error', 'Symbol', 'Map', 'WeakMap', 'Set', 'WeakSet'], function(name) {
-    _['is' + name] = function(obj) {
+  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error', 'Symbol', 'Map', 'WeakMap', 'Set', 'WeakSet'], function (name) {
+    _['is' + name] = function (obj) {
       return toString.call(obj) === '[object ' + name + ']';
     };
   });
@@ -1300,7 +1329,7 @@ export var exports;
   // Define a fallback version of the method in browsers (ahem, IE < 9), where
   // there isn't any inspectable "Arguments" type.
   if (!_.isArguments(arguments)) {
-    _.isArguments = function(obj) {
+    _.isArguments = function (obj) {
       return _.has(obj, 'callee');
     };
   }
@@ -1308,40 +1337,40 @@ export var exports;
   // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
   // IE 11 (#1621), Safari 8 (#1929), and PhantomJS (#2236).
   var nodelist = root.document && root.document.childNodes;
-  if (typeof /./ != 'function' && typeof Int8Array != 'object' && typeof nodelist != 'function') {
-    _.isFunction = function(obj) {
+  if (typeof /./ != 'function' && (typeof Int8Array === 'undefined' ? 'undefined' : _typeof(Int8Array)) != 'object' && typeof nodelist != 'function') {
+    _.isFunction = function (obj) {
       return typeof obj == 'function' || false;
     };
   }
 
   // Is a given object a finite number?
-  _.isFinite = function(obj) {
+  _.isFinite = function (obj) {
     return !_.isSymbol(obj) && isFinite(obj) && !isNaN(parseFloat(obj));
   };
 
   // Is the given value `NaN`?
-  _.isNaN = function(obj) {
+  _.isNaN = function (obj) {
     return _.isNumber(obj) && isNaN(obj);
   };
 
   // Is a given value a boolean?
-  _.isBoolean = function(obj) {
+  _.isBoolean = function (obj) {
     return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
   };
 
   // Is a given value equal to null?
-  _.isNull = function(obj) {
+  _.isNull = function (obj) {
     return obj === null;
   };
 
   // Is a given variable undefined?
-  _.isUndefined = function(obj) {
+  _.isUndefined = function (obj) {
     return obj === void 0;
   };
 
   // Shortcut function for checking if an object has a given property directly
   // on itself (in other words, not on a prototype).
-  _.has = function(obj, key) {
+  _.has = function (obj, key) {
     return obj != null && hasOwnProperty.call(obj, key);
   };
 
@@ -1350,53 +1379,54 @@ export var exports;
 
   // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
   // previous owner. Returns a reference to the Underscore object.
-  _.noConflict = function() {
+  _.noConflict = function () {
     root._ = previousUnderscore;
     return this;
   };
 
   // Keep the identity function around for default iteratees.
-  _.identity = function(value) {
+  _.identity = function (value) {
     return value;
   };
 
   // Predicate-generating functions. Often useful outside of Underscore.
-  _.constant = function(value) {
-    return function() {
+  _.constant = function (value) {
+    return function () {
       return value;
     };
   };
 
-  _.noop = function(){};
+  _.noop = function () {};
 
   _.property = property;
 
   // Generates a function for a given object that returns a given property.
-  _.propertyOf = function(obj) {
-    return obj == null ? function(){} : function(key) {
+  _.propertyOf = function (obj) {
+    return obj == null ? function () {} : function (key) {
       return obj[key];
     };
   };
 
   // Returns a predicate for checking whether an object has a given set of
   // `key:value` pairs.
-  _.matcher = _.matches = function(attrs) {
+  _.matcher = _.matches = function (attrs) {
     attrs = _.extendOwn({}, attrs);
-    return function(obj) {
+    return function (obj) {
       return _.isMatch(obj, attrs);
     };
   };
 
   // Run a function **n** times.
-  _.times = function(n, iteratee, context) {
+  _.times = function (n, iteratee, context) {
     var accum = Array(Math.max(0, n));
     iteratee = optimizeCb(iteratee, context, 1);
-    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
-    return accum;
+    for (var i = 0; i < n; i++) {
+      accum[i] = iteratee(i);
+    }return accum;
   };
 
   // Return a random integer between min and max (inclusive).
-  _.random = function(min, max) {
+  _.random = function (min, max) {
     if (max == null) {
       max = min;
       min = 0;
@@ -1405,7 +1435,7 @@ export var exports;
   };
 
   // A (possibly faster) way to get the current timestamp as an integer.
-  _.now = Date.now || function() {
+  _.now = Date.now || function () {
     return new Date().getTime();
   };
 
@@ -1421,15 +1451,15 @@ export var exports;
   var unescapeMap = _.invert(escapeMap);
 
   // Functions for escaping and unescaping strings to/from HTML interpolation.
-  var createEscaper = function(map) {
-    var escaper = function(match) {
+  var createEscaper = function createEscaper(map) {
+    var escaper = function escaper(match) {
       return map[match];
     };
     // Regexes for identifying a key that needs to be escaped.
     var source = '(?:' + _.keys(map).join('|') + ')';
     var testRegexp = RegExp(source);
     var replaceRegexp = RegExp(source, 'g');
-    return function(string) {
+    return function (string) {
       string = string == null ? '' : '' + string;
       return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
     };
@@ -1439,7 +1469,7 @@ export var exports;
 
   // If the value of the named `property` is a function then invoke it with the
   // `object` as context; otherwise, return it.
-  _.result = function(object, prop, fallback) {
+  _.result = function (object, prop, fallback) {
     var value = object == null ? void 0 : object[prop];
     if (value === void 0) {
       value = fallback;
@@ -1450,7 +1480,7 @@ export var exports;
   // Generate a unique integer id (unique within the entire client session).
   // Useful for temporary DOM ids.
   var idCounter = 0;
-  _.uniqueId = function(prefix) {
+  _.uniqueId = function (prefix) {
     var id = ++idCounter + '';
     return prefix ? prefix + id : id;
   };
@@ -1481,7 +1511,7 @@ export var exports;
 
   var escapeRegExp = /\\|'|\r|\n|\u2028|\u2029/g;
 
-  var escapeChar = function(match) {
+  var escapeChar = function escapeChar(match) {
     return '\\' + escapes[match];
   };
 
@@ -1489,21 +1519,17 @@ export var exports;
   // Underscore templating handles arbitrary delimiters, preserves whitespace,
   // and correctly escapes quotes within interpolated code.
   // NB: `oldSettings` only exists for backwards compatibility.
-  _.template = function(text, settings, oldSettings) {
+  _.template = function (text, settings, oldSettings) {
     if (!settings && oldSettings) settings = oldSettings;
     settings = _.defaults({}, settings, _.templateSettings);
 
     // Combine delimiters into one regular expression via alternation.
-    var matcher = RegExp([
-      (settings.escape || noMatch).source,
-      (settings.interpolate || noMatch).source,
-      (settings.evaluate || noMatch).source
-    ].join('|') + '|$', 'g');
+    var matcher = RegExp([(settings.escape || noMatch).source, (settings.interpolate || noMatch).source, (settings.evaluate || noMatch).source].join('|') + '|$', 'g');
 
     // Compile the template source, escaping string literals appropriately.
     var index = 0;
     var source = "__p+='";
-    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
+    text.replace(matcher, function (match, escape, interpolate, evaluate, offset) {
       source += text.slice(index, offset).replace(escapeRegExp, escapeChar);
       index = offset + match.length;
 
@@ -1523,9 +1549,7 @@ export var exports;
     // If a variable is not specified, place data values in local scope.
     if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
 
-    source = "var __t,__p='',__j=Array.prototype.join," +
-      "print=function(){__p+=__j.call(arguments,'');};\n" +
-      source + 'return __p;\n';
+    source = "var __t,__p='',__j=Array.prototype.join," + "print=function(){__p+=__j.call(arguments,'');};\n" + source + 'return __p;\n';
 
     var render;
     try {
@@ -1535,7 +1559,7 @@ export var exports;
       throw e;
     }
 
-    var template = function(data) {
+    var template = function template(data) {
       return render.call(this, data, _);
     };
 
@@ -1547,7 +1571,7 @@ export var exports;
   };
 
   // Add a "chain" function. Start chaining a wrapped Underscore object.
-  _.chain = function(obj) {
+  _.chain = function (obj) {
     var instance = _(obj);
     instance._chain = true;
     return instance;
@@ -1560,15 +1584,15 @@ export var exports;
   // underscore functions. Wrapped objects may be chained.
 
   // Helper function to continue chaining intermediate results.
-  var chainResult = function(instance, obj) {
+  var chainResult = function chainResult(instance, obj) {
     return instance._chain ? _(obj).chain() : obj;
   };
 
   // Add your own custom functions to the Underscore object.
-  _.mixin = function(obj) {
-    _.each(_.functions(obj), function(name) {
+  _.mixin = function (obj) {
+    _.each(_.functions(obj), function (name) {
       var func = _[name] = obj[name];
-      _.prototype[name] = function() {
+      _.prototype[name] = function () {
         var args = [this._wrapped];
         push.apply(args, arguments);
         return chainResult(this, func.apply(_, args));
@@ -1581,9 +1605,9 @@ export var exports;
   _.mixin(_);
 
   // Add all mutator Array functions to the wrapper.
-  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
+  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function (name) {
     var method = ArrayProto[name];
-    _.prototype[name] = function() {
+    _.prototype[name] = function () {
       var obj = this._wrapped;
       method.apply(obj, arguments);
       if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
@@ -1592,15 +1616,15 @@ export var exports;
   });
 
   // Add all accessor Array functions to the wrapper.
-  _.each(['concat', 'join', 'slice'], function(name) {
+  _.each(['concat', 'join', 'slice'], function (name) {
     var method = ArrayProto[name];
-    _.prototype[name] = function() {
+    _.prototype[name] = function () {
       return chainResult(this, method.apply(this._wrapped, arguments));
     };
   });
 
   // Extracts the result from a wrapped and chained object.
-  _.prototype.value = function() {
+  _.prototype.value = function () {
     return this._wrapped;
   };
 
@@ -1608,7 +1632,7 @@ export var exports;
   // such as arithmetic and JSON stringification.
   _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
 
-  _.prototype.toString = function() {
+  _.prototype.toString = function () {
     return String(this._wrapped);
   };
 
@@ -1620,8 +1644,8 @@ export var exports;
   // an AMD load request. Those cases could generate an error when an
   // anonymous define() is called outside of a loader request.
   if (typeof define == 'function' && define.amd) {
-    define('underscore', [], function() {
+    define('underscore', [], function () {
       return _;
     });
   }
-}());
+})();
