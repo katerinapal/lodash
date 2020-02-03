@@ -1,9 +1,9 @@
 #!/usr/bin/env node
+import fs from "fs";
+import path from "path";
 'use strict';
 
-var _ = require('../lodash'),
-    fs = require('fs'),
-    path = require('path');
+var _ = require('../lodash');
 
 var args = (args = process.argv)
   .slice((args[0] === process.execPath || args[0] === 'node') ? 2 : 0);
