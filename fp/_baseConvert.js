@@ -1,5 +1,5 @@
-var mapping = require('./_mapping'),
-    fallbackHolder = require('./placeholder');
+import * as mapping from "./_mapping";
+import { placeholderjs as fallbackHolder } from "./placeholder";
 
 /** Built-in value reference. */
 var push = Array.prototype.push;
@@ -120,21 +120,6 @@ function wrapImmutable(func, cloner) {
   };
 }
 
-/**
- * The base implementation of `convert` which accepts a `util` object of methods
- * required to perform conversions.
- *
- * @param {Object} util The util object.
- * @param {string} name The name of the function to convert.
- * @param {Function} func The function to convert.
- * @param {Object} [options] The options object.
- * @param {boolean} [options.cap=true] Specify capping iteratee arguments.
- * @param {boolean} [options.curry=true] Specify currying.
- * @param {boolean} [options.fixed=true] Specify fixed arity.
- * @param {boolean} [options.immutable=true] Specify immutable operations.
- * @param {boolean} [options.rearg=true] Specify rearranging arguments.
- * @returns {Function|Object} Returns the converted function or object.
- */
 function baseConvert(util, name, func, options) {
   var isLib = typeof name == 'function',
       isObj = name === Object(name);
@@ -566,4 +551,21 @@ function baseConvert(util, name, func, options) {
   return _;
 }
 
-module.exports = baseConvert;
+var exported_baseConvert = baseConvert;
+
+/**
+ * The base implementation of `convert` which accepts a `util` object of methods
+ * required to perform conversions.
+ *
+ * @param {Object} util The util object.
+ * @param {string} name The name of the function to convert.
+ * @param {Function} func The function to convert.
+ * @param {Object} [options] The options object.
+ * @param {boolean} [options.cap=true] Specify capping iteratee arguments.
+ * @param {boolean} [options.curry=true] Specify currying.
+ * @param {boolean} [options.fixed=true] Specify fixed arity.
+ * @param {boolean} [options.immutable=true] Specify immutable operations.
+ * @param {boolean} [options.rearg=true] Specify rearranging arguments.
+ * @returns {Function|Object} Returns the converted function or object.
+ */
+export { exported_baseConvert as baseConvert };

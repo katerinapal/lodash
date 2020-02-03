@@ -1,4 +1,12 @@
-;(function() {
+import system_moduleObject from "system";
+import fs_moduleObject from "fs";
+import webpage_moduleObject from "webpage";
+import fs from "fs";
+import qunitextras from "qunit-extras";
+import vm_moduleObject from "vm";
+import path from "path";
+import vm from "vm";
+(function() {
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
   var undefined;
@@ -215,14 +223,14 @@
 
     if (phantom) {
       min = 0;
-      result = params = phantom.args || require('system').args;
+      result = params = phantom.args || system_moduleObject.args;
     }
     var last = result[result.length - 1];
     result = (result.length > min && !/test(?:\.js)?$/.test(last)) ? last : '../lodash.js';
 
     if (!amd) {
       try {
-        result = require('fs').realpathSync(result);
+        result = fs_moduleObject.realpathSync(result);
       } catch (e) {}
 
       try {
@@ -266,14 +274,12 @@
 
   // Exit early if going to run tests in a PhantomJS web page.
   if (phantom && isModularize) {
-    var page = require('webpage').create();
+    var page = webpage_moduleObject.create();
 
     page.onCallback = function(details) {
       var coverage = details.coverage;
       if (coverage) {
-        var fs = require('fs'),
-            cwd = fs.workingDirectory,
-            sep = fs.separator;
+        var cwd = fs.workingDirectory, sep = fs.separator;
 
         fs.write([cwd, 'coverage', 'coverage.json'].join(sep), JSON.stringify(coverage));
       }
@@ -327,7 +333,7 @@
   } catch (e) {}
 
   /** Load QUnit and extras. */
-  var QUnit = root.QUnit || require('qunit-extras');
+  var QUnit = root.QUnit || qunitextras;
 
   /** Load stable Lodash. */
   var lodashStable = root.lodashStable;
@@ -628,7 +634,7 @@
 
   // Add other realm values from the `vm` module.
   lodashStable.attempt(function() {
-    lodashStable.assign(realm, require('vm').runInNewContext([
+    lodashStable.assign(realm, vm_moduleObject.runInNewContext([
       '(function() {',
       '  var noop = function() {},',
       '      root = this;',
@@ -738,8 +744,7 @@
 
   // Expose internal modules for better code coverage.
   lodashStable.attempt(function() {
-    var path = require('path'),
-        basePath = path.dirname(filePath);
+    var basePath = path.dirname(filePath);
 
     if (isModularize && !(amd || isNpm)) {
       lodashStable.each([
@@ -11127,11 +11132,7 @@
       assert.expect(2);
 
       if (!amd && _._baseEach) {
-        var path = require('path'),
-            basePath = path.dirname(filePath),
-            uid = 'e0gvgyrad1jor',
-            coreKey = '__core-js_shared__',
-            fakeSrcKey = 'Symbol(src)_1.' + uid;
+        var basePath = path.dirname(filePath), uid = 'e0gvgyrad1jor', coreKey = '__core-js_shared__', fakeSrcKey = 'Symbol(src)_1.' + uid;
 
         root[coreKey] = { 'keys': { 'IE_PROTO': 'Symbol(IE_PROTO)_3.' + uid } };
         emptyObject(require.cache);
@@ -16234,11 +16235,7 @@
       assert.expect(2);
 
       if (!coverage && !document && !isModularize && realm.object) {
-        var fs = require('fs'),
-            vm = require('vm'),
-            expected = {},
-            context = vm.createContext({ '_': expected, 'console': console }),
-            source = fs.readFileSync(filePath, 'utf8');
+        var expected = {}, context = vm.createContext({ '_': expected, 'console': console }), source = fs.readFileSync(filePath, 'utf8');
 
         vm.runInContext(source + '\nthis.lodash = this._.noConflict()', context);
 
