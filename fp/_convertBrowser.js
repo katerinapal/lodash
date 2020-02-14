@@ -1,4 +1,4 @@
-var baseConvert = require('./_baseConvert');
+import { baseConvert } from "./_baseConvert";
 
 /**
  * Converts `lodash` to an immutable auto-curried iteratee-first data-last
