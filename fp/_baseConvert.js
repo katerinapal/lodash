@@ -1,4 +1,9 @@
-import { placeholderjs as fallbackHolder } from "./placeholder";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.baseConvert = undefined;
+
+var _placeholder = require('./placeholder');
 
 /** Built-in value reference. */
 var push = Array.prototype.push;
@@ -13,9 +18,11 @@ var push = Array.prototype.push;
  * @returns {Function} Returns the new function.
  */
 function baseArity(func, n) {
-  return n == 2
-    ? function(a, b) { return func.apply(undefined, arguments); }
-    : function(a) { return func.apply(undefined, arguments); };
+  return n == 2 ? function (a, b) {
+    return func.apply(undefined, arguments);
+  } : function (a) {
+    return func.apply(undefined, arguments);
+  };
 }
 
 /**
@@ -28,9 +35,11 @@ function baseArity(func, n) {
  * @returns {Function} Returns the new function.
  */
 function baseAry(func, n) {
-  return n == 2
-    ? function(a, b) { return func(a, b); }
-    : function(a) { return func(a); };
+  return n == 2 ? function (a, b) {
+    return func(a, b);
+  } : function (a) {
+    return func(a);
+  };
 }
 
 /**
@@ -58,7 +67,7 @@ function cloneArray(array) {
  * @returns {Function} Returns the new cloner function.
  */
 function createCloner(func) {
-  return function(object) {
+  return function (object) {
     return func({}, object);
   };
 }
@@ -73,7 +82,7 @@ function createCloner(func) {
  * @returns {Function} Returns the new function.
  */
 function flatSpread(func, start) {
-  return function() {
+  return function () {
     var length = arguments.length,
         lastIndex = length - 1,
         args = Array(length);
@@ -104,7 +113,7 @@ function flatSpread(func, start) {
  * @returns {Function} Returns the new immutable function.
  */
 function wrapImmutable(func, cloner) {
-  return function() {
+  return function () {
     var length = arguments.length;
     if (!length) {
       return;
@@ -129,7 +138,7 @@ function baseConvert(util, name, func, options) {
     name = undefined;
   }
   if (func == null) {
-    throw new TypeError;
+    throw new TypeError();
   }
   options || (options = {});
 
@@ -141,10 +150,10 @@ function baseConvert(util, name, func, options) {
     'rearg': 'rearg' in options ? options.rearg : true
   };
 
-  var defaultHolder = isLib ? func : fallbackHolder,
-      forceCurry = ('curry' in options) && options.curry,
-      forceFixed = ('fixed' in options) && options.fixed,
-      forceRearg = ('rearg' in options) && options.rearg,
+  var defaultHolder = isLib ? func : _placeholder.placeholderjs,
+      forceCurry = 'curry' in options && options.curry,
+      forceFixed = 'fixed' in options && options.fixed,
+      forceRearg = 'rearg' in options && options.rearg,
       pristine = isLib ? func.runInContext() : undefined;
 
   var helpers = isLib ? func : {
@@ -181,44 +190,42 @@ function baseConvert(util, name, func, options) {
   var aryMethodKeys = keys(mapping.aryMethod);
 
   var wrappers = {
-    'castArray': function(castArray) {
-      return function() {
+    'castArray': function castArray(_castArray) {
+      return function () {
         var value = arguments[0];
-        return isArray(value)
-          ? castArray(cloneArray(value))
-          : castArray.apply(undefined, arguments);
+        return isArray(value) ? _castArray(cloneArray(value)) : _castArray.apply(undefined, arguments);
       };
     },
-    'iteratee': function(iteratee) {
-      return function() {
+    'iteratee': function iteratee(_iteratee) {
+      return function () {
         var func = arguments[0],
             arity = arguments[1],
-            result = iteratee(func, arity),
+            result = _iteratee(func, arity),
             length = result.length;
 
         if (config.cap && typeof arity == 'number') {
-          arity = arity > 2 ? (arity - 2) : 1;
-          return (length && length <= arity) ? result : baseAry(result, arity);
+          arity = arity > 2 ? arity - 2 : 1;
+          return length && length <= arity ? result : baseAry(result, arity);
         }
         return result;
       };
     },
-    'mixin': function(mixin) {
-      return function(source) {
+    'mixin': function mixin(_mixin) {
+      return function (source) {
         var func = this;
         if (!isFunction(func)) {
-          return mixin(func, Object(source));
+          return _mixin(func, Object(source));
         }
         var pairs = [];
-        each(keys(source), function(key) {
+        each(keys(source), function (key) {
           if (isFunction(source[key])) {
             pairs.push([key, func.prototype[key]]);
           }
         });
 
-        mixin(func, Object(source));
+        _mixin(func, Object(source));
 
-        each(pairs, function(pair) {
+        each(pairs, function (pair) {
           var value = pair[1];
           if (isFunction(value)) {
             func.prototype[pair[0]] = value;
@@ -229,21 +236,21 @@ function baseConvert(util, name, func, options) {
         return func;
       };
     },
-    'nthArg': function(nthArg) {
-      return function(n) {
-        var arity = n < 0 ? 1 : (toInteger(n) + 1);
-        return curry(nthArg(n), arity);
+    'nthArg': function nthArg(_nthArg) {
+      return function (n) {
+        var arity = n < 0 ? 1 : toInteger(n) + 1;
+        return curry(_nthArg(n), arity);
       };
     },
-    'rearg': function(rearg) {
-      return function(func, indexes) {
+    'rearg': function rearg(_rearg) {
+      return function (func, indexes) {
         var arity = indexes ? indexes.length : 0;
-        return curry(rearg(func, indexes), arity);
+        return curry(_rearg(func, indexes), arity);
       };
     },
-    'runInContext': function(runInContext) {
-      return function(context) {
-        return baseConvert(util, runInContext(context), options);
+    'runInContext': function runInContext(_runInContext) {
+      return function (context) {
+        return baseConvert(util, _runInContext(context), options);
       };
     }
   };
@@ -282,9 +289,7 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the cast function.
    */
   function castCurry(name, func, n) {
-    return (forceCurry || (config.curry && n > 1))
-      ? curry(func, n)
-      : func;
+    return forceCurry || config.curry && n > 1 ? curry(func, n) : func;
   }
 
   /**
@@ -301,7 +306,7 @@ function baseConvert(util, name, func, options) {
       var data = mapping.methodSpread[name],
           start = data && data.start;
 
-      return start  === undefined ? ary(func, n) : flatSpread(func, start);
+      return start === undefined ? ary(func, n) : flatSpread(func, start);
     }
     return func;
   }
@@ -316,9 +321,7 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the cast function.
    */
   function castRearg(name, func, n) {
-    return (config.rearg && n > 1 && (forceRearg || !mapping.skipRearg[name]))
-      ? rearg(func, mapping.methodRearg[name] || mapping.aryRearg[n])
-      : func;
+    return config.rearg && n > 1 && (forceRearg || !mapping.skipRearg[name]) ? rearg(func, mapping.methodRearg[name] || mapping.aryRearg[n]) : func;
   }
 
   /**
@@ -342,8 +345,7 @@ function baseConvert(util, name, func, options) {
       var key = path[index],
           value = nested[key];
 
-      if (value != null &&
-          !(isFunction(value) || isError(value) || isWeakMap(value))) {
+      if (value != null && !(isFunction(value) || isError(value) || isWeakMap(value))) {
         nested[key] = clone(index == lastIndex ? value : Object(value));
       }
       nested = nested[key];
@@ -374,7 +376,7 @@ function baseConvert(util, name, func, options) {
         methodName = mapping.remap[realName] || realName,
         oldOptions = options;
 
-    return function(options) {
+    return function (options) {
       var newUtil = isLib ? pristine : helpers,
           newFunc = isLib ? pristine[methodName] : func,
           newOptions = assign(assign({}, oldOptions), options);
@@ -393,7 +395,7 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the new function.
    */
   function iterateeAry(func, n) {
-    return overArg(func, function(func) {
+    return overArg(func, function (func) {
       return typeof func == 'function' ? baseAry(func, n) : func;
     });
   }
@@ -410,7 +412,7 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the new function.
    */
   function iterateeRearg(func, indexes) {
-    return overArg(func, function(func) {
+    return overArg(func, function (func) {
       var n = indexes.length;
       return baseArity(rearg(baseAry(func, n), indexes), n);
     });
@@ -425,7 +427,7 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the new function.
    */
   function overArg(func, transform) {
-    return function() {
+    return function () {
       var length = arguments.length;
       if (!length) {
         return func();
@@ -434,7 +436,7 @@ function baseConvert(util, name, func, options) {
       while (length--) {
         args[length] = arguments[length];
       }
-      var index = config.rearg ? 0 : (length - 1);
+      var index = config.rearg ? 0 : length - 1;
       args[index] = transform(args[index]);
       return func.apply(undefined, args);
     };
@@ -457,27 +459,22 @@ function baseConvert(util, name, func, options) {
 
     if (wrapper) {
       wrapped = wrapper(func);
-    }
-    else if (config.immutable) {
+    } else if (config.immutable) {
       if (mapping.mutate.array[realName]) {
         wrapped = wrapImmutable(func, cloneArray);
-      }
-      else if (mapping.mutate.object[realName]) {
+      } else if (mapping.mutate.object[realName]) {
         wrapped = wrapImmutable(func, createCloner(func));
-      }
-      else if (mapping.mutate.set[realName]) {
+      } else if (mapping.mutate.set[realName]) {
         wrapped = wrapImmutable(func, cloneByPath);
       }
     }
-    each(aryMethodKeys, function(aryKey) {
-      each(mapping.aryMethod[aryKey], function(otherName) {
+    each(aryMethodKeys, function (aryKey) {
+      each(mapping.aryMethod[aryKey], function (otherName) {
         if (realName == otherName) {
           var data = mapping.methodSpread[realName],
               afterRearg = data && data.afterRearg;
 
-          result = afterRearg
-            ? castFixed(realName, castRearg(realName, wrapped, aryKey), aryKey)
-            : castRearg(realName, castFixed(realName, wrapped, aryKey), aryKey);
+          result = afterRearg ? castFixed(realName, castRearg(realName, wrapped, aryKey), aryKey) : castRearg(realName, castFixed(realName, wrapped, aryKey), aryKey);
 
           result = castCap(realName, result);
           result = castCurry(realName, result, aryKey);
@@ -489,7 +486,7 @@ function baseConvert(util, name, func, options) {
 
     result || (result = wrapped);
     if (result == func) {
-      result = forceCurry ? curry(result, 1) : function() {
+      result = forceCurry ? curry(result, 1) : function () {
         return func.apply(this, arguments);
       };
     }
@@ -508,8 +505,8 @@ function baseConvert(util, name, func, options) {
 
   // Convert methods by ary cap.
   var pairs = [];
-  each(aryMethodKeys, function(aryKey) {
-    each(mapping.aryMethod[aryKey], function(key) {
+  each(aryMethodKeys, function (aryKey) {
+    each(mapping.aryMethod[aryKey], function (key) {
       var func = _[mapping.remap[key] || key];
       if (func) {
         pairs.push([key, wrap(key, func, _)]);
@@ -518,7 +515,7 @@ function baseConvert(util, name, func, options) {
   });
 
   // Convert remaining methods.
-  each(keys(_), function(key) {
+  each(keys(_), function (key) {
     var func = _[key];
     if (typeof func == 'function') {
       var length = pairs.length;
@@ -533,7 +530,7 @@ function baseConvert(util, name, func, options) {
   });
 
   // Assign to `_` leaving `_.prototype` unchanged to allow chaining.
-  each(pairs, function(pair) {
+  each(pairs, function (pair) {
     _[pair[0]] = pair[1];
   });
 
@@ -541,8 +538,8 @@ function baseConvert(util, name, func, options) {
   _.placeholder = _;
 
   // Assign aliases.
-  each(keys(_), function(key) {
-    each(mapping.realToAlias[key] || [], function(alias) {
+  each(keys(_), function (key) {
+    each(mapping.realToAlias[key] || [], function (alias) {
       _[alias] = _[key];
     });
   });
@@ -567,4 +564,4 @@ var exported_baseConvert = baseConvert;
  * @param {boolean} [options.rearg=true] Specify rearranging arguments.
  * @returns {Function|Object} Returns the converted function or object.
  */
-export { exported_baseConvert as baseConvert };
+exports.baseConvert = exported_baseConvert;
