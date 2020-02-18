@@ -1,5 +1,4 @@
-/** Used to map aliases to their real names. */
-exports.aliasToReal = {
+var _mapping_aliasToReal = {
 
   // Lodash aliases.
   'each': 'forEach',
@@ -68,8 +67,7 @@ exports.aliasToReal = {
   'zipObj': 'zipObject'
 };
 
-/** Used to map ary to method names. */
-exports.aryMethod = {
+var aryMethod = {
   '1': [
     'assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create',
     'curry', 'curryRight', 'defaultsAll', 'defaultsDeepAll', 'floor', 'flow',
@@ -118,15 +116,13 @@ exports.aryMethod = {
   ]
 };
 
-/** Used to map ary to rearg configs. */
-exports.aryRearg = {
+var aryRearg = {
   '2': [1, 0],
   '3': [2, 0, 1],
   '4': [3, 2, 0, 1]
 };
 
-/** Used to map method names to their iteratee ary. */
-exports.iterateeAry = {
+var _mapping_iterateeAry = {
   'dropRightWhile': 1,
   'dropWhile': 1,
   'every': 1,
@@ -165,14 +161,12 @@ exports.iterateeAry = {
   'transform': 2
 };
 
-/** Used to map method names to iteratee rearg configs. */
-exports.iterateeRearg = {
+var _mapping_iterateeRearg = {
   'mapKeys': [1],
   'reduceRight': [1, 0]
 };
 
-/** Used to map method names to rearg configs. */
-exports.methodRearg = {
+var _mapping_methodRearg = {
   'assignInAllWith': [1, 0],
   'assignInWith': [1, 2, 0],
   'assignAllWith': [1, 0],
@@ -204,8 +198,7 @@ exports.methodRearg = {
   'zipWith': [1, 2, 0]
 };
 
-/** Used to map method names to spread configs. */
-exports.methodSpread = {
+var _mapping_methodSpread = {
   'assignAll': { 'start': 0 },
   'assignAllWith': { 'start': 0 },
   'assignInAll': { 'start': 0 },
@@ -222,8 +215,7 @@ exports.methodSpread = {
   'zipAll': { 'start': 0 }
 };
 
-/** Used to identify methods which mutate arrays or objects. */
-exports.mutate = {
+var _mapping_mutate = {
   'array': {
     'fill': true,
     'pull': true,
@@ -261,10 +253,9 @@ exports.mutate = {
   }
 };
 
-/** Used to map real names to their aliases. */
-exports.realToAlias = (function() {
+var _mapping_realToAlias = function() {
   var hasOwnProperty = Object.prototype.hasOwnProperty,
-      object = exports.aliasToReal,
+      object = _mapping_aliasToReal,
       result = {};
 
   for (var key in object) {
@@ -276,10 +267,9 @@ exports.realToAlias = (function() {
     }
   }
   return result;
-}());
+}();
 
-/** Used to map method names to other names. */
-exports.remap = {
+var _mapping_remap = {
   'assignAll': 'assign',
   'assignAllWith': 'assignWith',
   'assignInAll': 'assignIn',
@@ -314,8 +304,7 @@ exports.remap = {
   'zipAll': 'zip'
 };
 
-/** Used to track methods that skip fixing their arity. */
-exports.skipFixed = {
+var _mapping_skipFixed = {
   'castArray': true,
   'flow': true,
   'flowRight': true,
@@ -325,8 +314,7 @@ exports.skipFixed = {
   'runInContext': true
 };
 
-/** Used to track methods that skip rearranging arguments. */
-exports.skipRearg = {
+var _mapping_skipRearg = {
   'add': true,
   'assign': true,
   'assignIn': true,
@@ -356,3 +344,16 @@ exports.skipRearg = {
   'zipObject': true,
   'zipObjectDeep': true
 };
+
+export { _mapping_aliasToReal };
+export { aryMethod };
+export { aryRearg };
+export { _mapping_iterateeAry };
+export { _mapping_iterateeRearg };
+export { _mapping_methodRearg };
+export { _mapping_methodSpread };
+export { _mapping_mutate };
+export { _mapping_realToAlias };
+export { _mapping_remap };
+export { _mapping_skipFixed };
+export { _mapping_skipRearg };
