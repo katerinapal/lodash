@@ -1,22 +1,23 @@
 #!/usr/bin/env node
+import events_moduleObject from "events";
+import http from "http";
+import path from "path";
+import url from "url";
+import util from "util";
+import chalk from "chalk";
+import ecstatic from "ecstatic";
+import request from "request";
+import SauceTunnel from "sauce-tunnel";
 'use strict';
 
 /** Environment shortcut. */
 var env = process.env;
 
 /** Load Node.js modules. */
-var EventEmitter = require('events').EventEmitter,
-    http = require('http'),
-    path = require('path'),
-    url = require('url'),
-    util = require('util');
+var EventEmitter = events_moduleObject.EventEmitter;
 
 /** Load other modules. */
-var _ = require('../lodash.js'),
-    chalk = require('chalk'),
-    ecstatic = require('ecstatic'),
-    request = require('request'),
-    SauceTunnel = require('sauce-tunnel');
+var _ = require('../lodash.js');
 
 /** Used for Sauce Labs credentials. */
 var accessKey = env.SAUCE_ACCESS_KEY,

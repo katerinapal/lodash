@@ -1,5 +1,19 @@
-var mapping = require('./_mapping'),
-    fallbackHolder = require('./placeholder');
+import {
+  _mappingjs_aryMethod,
+  _mappingjs_aryRearg,
+  _mappingjs_iterateeAry,
+  _mappingjs_iterateeRearg,
+  _mappingjs_methodRearg,
+  _mappingjs_methodSpread,
+  _mappingjs_mutate,
+  _mappingjs_realToAlias,
+  _mappingjs_remap,
+  _mappingjs_skipFixed,
+  _mappingjs_skipRearg,
+  _mappingjs_aliasToReal,
+} from "./_mapping";
+
+import { placeholderjs as fallbackHolder } from "./placeholder";
 
 /** Built-in value reference. */
 var push = Array.prototype.push;
@@ -120,21 +134,6 @@ function wrapImmutable(func, cloner) {
   };
 }
 
-/**
- * The base implementation of `convert` which accepts a `util` object of methods
- * required to perform conversions.
- *
- * @param {Object} util The util object.
- * @param {string} name The name of the function to convert.
- * @param {Function} func The function to convert.
- * @param {Object} [options] The options object.
- * @param {boolean} [options.cap=true] Specify capping iteratee arguments.
- * @param {boolean} [options.curry=true] Specify currying.
- * @param {boolean} [options.fixed=true] Specify fixed arity.
- * @param {boolean} [options.immutable=true] Specify immutable operations.
- * @param {boolean} [options.rearg=true] Specify rearranging arguments.
- * @returns {Function|Object} Returns the converted function or object.
- */
 function baseConvert(util, name, func, options) {
   var isLib = typeof name == 'function',
       isObj = name === Object(name);
@@ -194,7 +193,7 @@ function baseConvert(util, name, func, options) {
       toInteger = helpers.toInteger,
       toPath = helpers.toPath;
 
-  var aryMethodKeys = keys(mapping.aryMethod);
+  var aryMethodKeys = keys(_mappingjs_aryMethod);
 
   var wrappers = {
     'castArray': function(castArray) {
@@ -276,11 +275,11 @@ function baseConvert(util, name, func, options) {
    */
   function castCap(name, func) {
     if (config.cap) {
-      var indexes = mapping.iterateeRearg[name];
+      var indexes = _mappingjs_iterateeRearg[name];
       if (indexes) {
         return iterateeRearg(func, indexes);
       }
-      var n = !isLib && mapping.iterateeAry[name];
+      var n = !isLib && _mappingjs_iterateeAry[name];
       if (n) {
         return iterateeAry(func, n);
       }
@@ -313,8 +312,8 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the cast function.
    */
   function castFixed(name, func, n) {
-    if (config.fixed && (forceFixed || !mapping.skipFixed[name])) {
-      var data = mapping.methodSpread[name],
+    if (config.fixed && (forceFixed || !_mappingjs_skipFixed[name])) {
+      var data = _mappingjs_methodSpread[name],
           start = data && data.start;
 
       return start  === undefined ? ary(func, n) : flatSpread(func, start);
@@ -332,8 +331,8 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the cast function.
    */
   function castRearg(name, func, n) {
-    return (config.rearg && n > 1 && (forceRearg || !mapping.skipRearg[name]))
-      ? rearg(func, mapping.methodRearg[name] || mapping.aryRearg[n])
+    return (config.rearg && n > 1 && (forceRearg || !_mappingjs_skipRearg[name]))
+      ? rearg(func, _mappingjs_methodRearg[name] || _mappingjs_aryRearg[n])
       : func;
   }
 
@@ -386,8 +385,8 @@ function baseConvert(util, name, func, options) {
    * @returns {Function} Returns the new converter function.
    */
   function createConverter(name, func) {
-    var realName = mapping.aliasToReal[name] || name,
-        methodName = mapping.remap[realName] || realName,
+    var realName = _mappingjs_aliasToReal[name] || name,
+        methodName = _mappingjs_remap[realName] || realName,
         oldOptions = options;
 
     return function(options) {
@@ -467,7 +466,7 @@ function baseConvert(util, name, func, options) {
    */
   function wrap(name, func, placeholder) {
     var result,
-        realName = mapping.aliasToReal[name] || name,
+        realName = _mappingjs_aliasToReal[name] || name,
         wrapped = func,
         wrapper = wrappers[realName];
 
@@ -475,20 +474,20 @@ function baseConvert(util, name, func, options) {
       wrapped = wrapper(func);
     }
     else if (config.immutable) {
-      if (mapping.mutate.array[realName]) {
+      if (_mappingjs_mutate.array[realName]) {
         wrapped = wrapImmutable(func, cloneArray);
       }
-      else if (mapping.mutate.object[realName]) {
+      else if (_mappingjs_mutate.object[realName]) {
         wrapped = wrapImmutable(func, createCloner(func));
       }
-      else if (mapping.mutate.set[realName]) {
+      else if (_mappingjs_mutate.set[realName]) {
         wrapped = wrapImmutable(func, cloneByPath);
       }
     }
     each(aryMethodKeys, function(aryKey) {
-      each(mapping.aryMethod[aryKey], function(otherName) {
+      each(_mappingjs_aryMethod[aryKey], function(otherName) {
         if (realName == otherName) {
-          var data = mapping.methodSpread[realName],
+          var data = _mappingjs_methodSpread[realName],
               afterRearg = data && data.afterRearg;
 
           result = afterRearg
@@ -525,8 +524,8 @@ function baseConvert(util, name, func, options) {
   // Convert methods by ary cap.
   var pairs = [];
   each(aryMethodKeys, function(aryKey) {
-    each(mapping.aryMethod[aryKey], function(key) {
-      var func = _[mapping.remap[key] || key];
+    each(_mappingjs_aryMethod[aryKey], function(key) {
+      var func = _[_mappingjs_remap[key] || key];
       if (func) {
         pairs.push([key, wrap(key, func, _)]);
       }
@@ -558,7 +557,7 @@ function baseConvert(util, name, func, options) {
 
   // Assign aliases.
   each(keys(_), function(key) {
-    each(mapping.realToAlias[key] || [], function(alias) {
+    each(_mappingjs_realToAlias[key] || [], function(alias) {
       _[alias] = _[key];
     });
   });
@@ -566,4 +565,21 @@ function baseConvert(util, name, func, options) {
   return _;
 }
 
-module.exports = baseConvert;
+var exported_baseConvert = baseConvert;
+
+/**
+ * The base implementation of `convert` which accepts a `util` object of methods
+ * required to perform conversions.
+ *
+ * @param {Object} util The util object.
+ * @param {string} name The name of the function to convert.
+ * @param {Function} func The function to convert.
+ * @param {Object} [options] The options object.
+ * @param {boolean} [options.cap=true] Specify capping iteratee arguments.
+ * @param {boolean} [options.curry=true] Specify currying.
+ * @param {boolean} [options.fixed=true] Specify fixed arity.
+ * @param {boolean} [options.immutable=true] Specify immutable operations.
+ * @param {boolean} [options.rearg=true] Specify rearranging arguments.
+ * @returns {Function|Object} Returns the converted function or object.
+ */
+export { exported_baseConvert as baseConvert };
