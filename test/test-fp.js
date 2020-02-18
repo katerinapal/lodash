@@ -1,4 +1,6 @@
-;(function() {
+import qunitextras_moduleDefault from "qunit-extras";
+import { baseConvert as _baseConvertjsjs } from "../fp/_baseConvert.js";
+(function() {
   'use strict';
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
@@ -32,13 +34,13 @@
   /*--------------------------------------------------------------------------*/
 
   /** Load QUnit and extras. */
-  var QUnit = root.QUnit || require('qunit-extras');
+  var QUnit = root.QUnit || qunitextras_moduleDefault;
 
   /** Load stable Lodash. */
   var _ = root._ || require('../lodash.js');
 
   var convert = (function() {
-    var baseConvert = root.fp || require('../fp/_baseConvert.js');
+    var baseConvert = root.fp || _baseConvertjsjs;
     if (!root.fp) {
       return function(name, func, options) {
         return baseConvert(_, name, func, options);
@@ -68,7 +70,7 @@
     ? (fp = _.noConflict(), _ = root._, fp)
     : convert(_.runInContext());
 
-  var mapping = root.mapping || require('../fp/_mapping.js');
+  var mapping = root.mapping || _mappingjsjs;
 
   /*--------------------------------------------------------------------------*/
 

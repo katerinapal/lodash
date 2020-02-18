@@ -1,6 +1,2 @@
-/**
- * The default argument placeholder value for methods.
- *
- * @type {Object}
- */
-module.exports = {};
+var placeholder_placeholderjs = {};
+export { placeholder_placeholderjs };
