@@ -1,20 +1,51 @@
 #!/usr/bin/env node
-import events_moduleObject from "events";
-import http from "http";
-import path from "path";
-import url from "url";
-import util from "util";
-import chalk from "chalk";
-import ecstatic from "ecstatic";
-import request from "request";
-import SauceTunnel from "sauce-tunnel";
+"use strict";
+
+var _events = require("events");
+
+var _events2 = _interopRequireDefault(_events);
+
+var _http = require("http");
+
+var _http2 = _interopRequireDefault(_http);
+
+var _path = require("path");
+
+var _path2 = _interopRequireDefault(_path);
+
+var _url = require("url");
+
+var _url2 = _interopRequireDefault(_url);
+
+var _util = require("util");
+
+var _util2 = _interopRequireDefault(_util);
+
+var _chalk = require("chalk");
+
+var _chalk2 = _interopRequireDefault(_chalk);
+
+var _ecstatic = require("ecstatic");
+
+var _ecstatic2 = _interopRequireDefault(_ecstatic);
+
+var _request = require("request");
+
+var _request2 = _interopRequireDefault(_request);
+
+var _sauceTunnel = require("sauce-tunnel");
+
+var _sauceTunnel2 = _interopRequireDefault(_sauceTunnel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 'use strict';
 
 /** Environment shortcut. */
 var env = process.env;
 
 /** Load Node.js modules. */
-var EventEmitter = events_moduleObject.EventEmitter;
+var EventEmitter = _events2.default.EventEmitter;
 
 /** Load other modules. */
 var _ = require('../lodash.js');
@@ -28,19 +59,13 @@ var maxJobRetries = 3,
     maxTunnelRetries = 3;
 
 /** Used as the static file server middleware. */
-var mount = ecstatic({
+var mount = (0, _ecstatic2.default)({
   'cache': 'no-cache',
   'root': process.cwd()
 });
 
 /** Used as the list of ports supported by Sauce Connect. */
-var ports = [
-  80, 443, 888, 2000, 2001, 2020, 2109, 2222, 2310, 3000, 3001, 3030, 3210,
-  3333, 4000, 4001, 4040, 4321, 4502, 4503, 4567, 5000, 5001, 5050, 5555, 5432,
-  6000, 6001, 6060, 6666, 6543, 7000, 7070, 7774, 7777, 8000, 8001, 8003, 8031,
-  8080, 8081, 8765, 8777, 8888, 9000, 9001, 9080, 9090, 9876, 9877, 9999, 49221,
-  55001
-];
+var ports = [80, 443, 888, 2000, 2001, 2020, 2109, 2222, 2310, 3000, 3001, 3030, 3210, 3333, 4000, 4001, 4040, 4321, 4502, 4503, 4567, 5000, 5001, 5050, 5555, 5432, 6000, 6001, 6060, 6666, 6543, 7000, 7070, 7774, 7777, 8000, 8001, 8003, 8031, 8080, 8081, 8765, 8777, 8888, 9000, 9001, 9080, 9090, 9876, 9877, 9999, 49221, 55001];
 
 /** Used by `logInline` to clear previously logged messages. */
 var prevLine = '';
@@ -98,19 +123,7 @@ var browserNameMap = {
 };
 
 /** List of platforms to load the runner on. */
-var platforms = [
-  ['Linux', 'android', '5.1'],
-  ['Windows 10', 'chrome', '54'],
-  ['Windows 10', 'chrome', '53'],
-  ['Windows 10', 'firefox', '50'],
-  ['Windows 10', 'firefox', '49'],
-  ['Windows 10', 'microsoftedge', '14'],
-  ['Windows 10', 'internet explorer', '11'],
-  ['Windows 8', 'internet explorer', '10'],
-  ['Windows 7', 'internet explorer', '9'],
-  ['macOS 10.12', 'safari', '10'],
-  ['OS X 10.11', 'safari', '9']
-];
+var platforms = [['Linux', 'android', '5.1'], ['Windows 10', 'chrome', '54'], ['Windows 10', 'chrome', '53'], ['Windows 10', 'firefox', '50'], ['Windows 10', 'firefox', '49'], ['Windows 10', 'microsoftedge', '14'], ['Windows 10', 'internet explorer', '11'], ['Windows 8', 'internet explorer', '10'], ['Windows 7', 'internet explorer', '9'], ['macOS 10.12', 'safari', '10'], ['OS X 10.11', 'safari', '9']];
 
 /** Used to tailor the `platforms` array. */
 var isAMD = _.includes(tags, 'amd'),
@@ -119,54 +132,61 @@ var isAMD = _.includes(tags, 'amd'),
 
 // The platforms to test IE compatibility modes.
 if (compatMode) {
-  platforms = [
-    ['Windows 10', 'internet explorer', '11'],
-    ['Windows 8', 'internet explorer', '10'],
-    ['Windows 7', 'internet explorer', '9'],
-    ['Windows 7', 'internet explorer', '8']
-  ];
+  platforms = [['Windows 10', 'internet explorer', '11'], ['Windows 8', 'internet explorer', '10'], ['Windows 7', 'internet explorer', '9'], ['Windows 7', 'internet explorer', '8']];
 }
 // The platforms for AMD tests.
 if (isAMD) {
-  platforms = _.filter(platforms, function(platform) {
+  platforms = _.filter(platforms, function (platform) {
     var browser = browserName(platform[1]),
         version = +platform[2];
 
     switch (browser) {
-      case 'Android': return version >= 4.4;
-      case 'Opera': return version >= 10;
+      case 'Android':
+        return version >= 4.4;
+      case 'Opera':
+        return version >= 10;
     }
     return true;
   });
 }
 // The platforms for Backbone tests.
 if (isBackbone) {
-  platforms = _.filter(platforms, function(platform) {
+  platforms = _.filter(platforms, function (platform) {
     var browser = browserName(platform[1]),
         version = +platform[2];
 
     switch (browser) {
-      case 'Firefox': return version >= 4;
-      case 'Internet Explorer': return version >= 7;
-      case 'iPad': return version >= 5;
-      case 'Opera': return version >= 12;
+      case 'Firefox':
+        return version >= 4;
+      case 'Internet Explorer':
+        return version >= 7;
+      case 'iPad':
+        return version >= 5;
+      case 'Opera':
+        return version >= 12;
     }
     return true;
   });
 }
 // The platforms for modern builds.
 if (isModern) {
-  platforms = _.filter(platforms, function(platform) {
+  platforms = _.filter(platforms, function (platform) {
     var browser = browserName(platform[1]),
         version = +platform[2];
 
     switch (browser) {
-      case 'Android': return version >= 4.1;
-      case 'Firefox': return version >= 10;
-      case 'Internet Explorer': return version >= 9;
-      case 'iPad': return version >= 6;
-      case 'Opera': return version >= 12;
-      case 'Safari': return version >= 6;
+      case 'Android':
+        return version >= 4.1;
+      case 'Firefox':
+        return version >= 10;
+      case 'Internet Explorer':
+        return version >= 9;
+      case 'iPad':
+        return version >= 6;
+      case 'Opera':
+        return version >= 12;
+      case 'Safari':
+        return version >= 6;
     }
     return true;
   });
@@ -223,7 +243,7 @@ function browserName(identifier) {
  */
 function getOption(name, defaultValue) {
   var isArr = _.isArray(defaultValue);
-  return _.reduce(process.argv, function(result, value) {
+  return _.reduce(process.argv, function (result, value) {
     if (isArr) {
       value = optionToArray(name, value);
       return _.isEmpty(value) ? result : value;
@@ -263,7 +283,7 @@ function logInline(text) {
  * @private
  */
 function logThrobber() {
-  logInline('Please wait' + _.repeat('.', (++waitCount % 3) + 1));
+  logInline('Please wait' + _.repeat('.', ++waitCount % 3 + 1));
 }
 
 /**
@@ -410,7 +430,7 @@ function onJobStatus(error, res, body) {
       jobResult = _.get(data, 'result', null),
       jobStatus = _.get(data, 'status', ''),
       jobUrl = _.get(data, 'url', null),
-      expired = (elapsed >= queueTimeout && !_.includes(jobStatus, 'in progress')),
+      expired = elapsed >= queueTimeout && !_.includes(jobStatus, 'in progress'),
       options = this.options,
       platform = options.platforms[0];
 
@@ -451,22 +471,19 @@ function onJobStatus(error, res, body) {
 
     logInline();
     if (failures) {
-      console.error(label + ' %s ' + chalk.red('failed') + ' %d test' + (failures > 1 ? 's' : '') + '. %s', description, failures, details);
-    }
-    else if (tunnel.attempts < tunnel.retries) {
+      console.error(label + ' %s ' + _chalk2.default.red('failed') + ' %d test' + (failures > 1 ? 's' : '') + '. %s', description, failures, details);
+    } else if (tunnel.attempts < tunnel.retries) {
       tunnel.restart();
       return;
-    }
-    else {
+    } else {
       if (message === undefined) {
         message = 'Results are unavailable. ' + details;
       }
-      console.error(label, description, chalk.red('failed') + ';', message);
+      console.error(label, description, _chalk2.default.red('failed') + ';', message);
     }
-  }
-  else {
+  } else {
     logInline();
-    console.log(label, description, chalk.green('passed'));
+    console.log(label, description, _chalk2.default.green('passed'));
   }
   this.running = false;
   this.emit('complete');
@@ -527,7 +544,7 @@ function Job(properties) {
   this._pollerId = this.id = this.result = this.taskId = this.url = null;
 }
 
-util.inherits(Job, EventEmitter);
+_util2.default.inherits(Job, EventEmitter);
 
 /**
  * Removes the job.
@@ -536,19 +553,19 @@ util.inherits(Job, EventEmitter);
  * @param {Function} callback The function called once the job is removed.
  * @param {Object} Returns the job instance.
  */
-Job.prototype.remove = function(callback) {
+Job.prototype.remove = function (callback) {
   this.once('remove', _.iteratee(callback));
   if (this.removing) {
     return this;
   }
   this.removing = true;
-  return this.stop(function() {
+  return this.stop(function () {
     var onRemove = _.bind(onJobRemove, this);
     if (!this.id) {
       _.defer(onRemove);
       return;
     }
-    request.del(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}')(this), {
+    _request2.default.del(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}')(this), {
       'auth': { 'user': this.user, 'pass': this.pass }
     }, onRemove);
   });
@@ -561,7 +578,7 @@ Job.prototype.remove = function(callback) {
  * @param {Function} callback The function called once the job is reset.
  * @param {Object} Returns the job instance.
  */
-Job.prototype.reset = function(callback) {
+Job.prototype.reset = function (callback) {
   this.once('reset', _.iteratee(callback));
   if (this.resetting) {
     return this;
@@ -577,7 +594,7 @@ Job.prototype.reset = function(callback) {
  * @param {Function} callback The function called once the job is restarted.
  * @param {Object} Returns the job instance.
  */
-Job.prototype.restart = function(callback) {
+Job.prototype.restart = function (callback) {
   this.once('restart', _.iteratee(callback));
   if (this.restarting) {
     return this;
@@ -602,13 +619,13 @@ Job.prototype.restart = function(callback) {
  * @param {Function} callback The function called once the job is started.
  * @param {Object} Returns the job instance.
  */
-Job.prototype.start = function(callback) {
+Job.prototype.start = function (callback) {
   this.once('start', _.iteratee(callback));
   if (this.starting || this.running) {
     return this;
   }
   this.starting = true;
-  request.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests')(this), {
+  _request2.default.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests')(this), {
     'auth': { 'user': this.user, 'pass': this.pass },
     'json': this.options
   }, _.bind(onJobStart, this));
@@ -623,14 +640,14 @@ Job.prototype.start = function(callback) {
  * @param {Function} callback The function called once the status is resolved.
  * @param {Object} Returns the job instance.
  */
-Job.prototype.status = function(callback) {
+Job.prototype.status = function (callback) {
   this.once('status', _.iteratee(callback));
   if (this.checking || this.removing || this.resetting || this.restarting || this.starting || this.stopping) {
     return this;
   }
   this._pollerId = null;
   this.checking = true;
-  request.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests/status')(this), {
+  _request2.default.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests/status')(this), {
     'auth': { 'user': this.user, 'pass': this.pass },
     'json': { 'js tests': [this.taskId] }
   }, _.bind(onJobStatus, this));
@@ -645,7 +662,7 @@ Job.prototype.status = function(callback) {
  * @param {Function} callback The function called once the job is stopped.
  * @param {Object} Returns the job instance.
  */
-Job.prototype.stop = function(callback) {
+Job.prototype.stop = function (callback) {
   this.once('stop', _.iteratee(callback));
   if (this.stopping) {
     return this;
@@ -661,7 +678,7 @@ Job.prototype.stop = function(callback) {
     _.defer(onStop);
     return this;
   }
-  request.put(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}/stop')(this), {
+  _request2.default.put(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}/stop')(this), {
     'auth': { 'user': this.user, 'pass': this.pass }
   }, onStop);
 
@@ -684,7 +701,7 @@ function Tunnel(properties) {
   var active = [],
       queue = [];
 
-  var all = _.map(this.platforms, _.bind(function(platform) {
+  var all = _.map(this.platforms, _.bind(function (platform) {
     return new Job(_.merge({
       'user': this.user,
       'pass': this.pass,
@@ -699,7 +716,7 @@ function Tunnel(properties) {
       total = all.length,
       tunnel = this;
 
-  _.invokeMap(all, 'on', 'complete', function() {
+  _.invokeMap(all, 'on', 'complete', function () {
     _.pull(active, this);
     if (success) {
       success = !this.failed;
@@ -711,19 +728,18 @@ function Tunnel(properties) {
     tunnel.dequeue();
   });
 
-  _.invokeMap(all, 'on', 'restart', function() {
+  _.invokeMap(all, 'on', 'restart', function () {
     if (!_.includes(restarted, this)) {
       restarted.push(this);
     }
     // Restart tunnel if all active jobs have restarted.
     var threshold = Math.min(all.length, _.isFinite(throttled) ? throttled : 3);
-    if (tunnel.attempts < tunnel.retries &&
-        active.length >= threshold && _.isEmpty(_.difference(active, restarted))) {
+    if (tunnel.attempts < tunnel.retries && active.length >= threshold && _.isEmpty(_.difference(active, restarted))) {
       tunnel.restart();
     }
   });
 
-  this.on('restart', function() {
+  this.on('restart', function () {
     completed = 0;
     success = true;
     restarted.length = 0;
@@ -733,10 +749,10 @@ function Tunnel(properties) {
   this.attempts = 0;
   this.restarting = this.running = this.starting = this.stopping = false;
   this.jobs = { 'active': active, 'all': all, 'queue': queue };
-  this.connection = new SauceTunnel(this.user, this.pass, this.id, this.tunneled, ['-P', '0']);
+  this.connection = new _sauceTunnel2.default(this.user, this.pass, this.id, this.tunneled, ['-P', '0']);
 }
 
-util.inherits(Tunnel, EventEmitter);
+_util2.default.inherits(Tunnel, EventEmitter);
 
 /**
  * Restarts the tunnel.
@@ -744,7 +760,7 @@ util.inherits(Tunnel, EventEmitter);
  * @memberOf Tunnel
  * @param {Function} callback The function called once the tunnel is restarted.
  */
-Tunnel.prototype.restart = function(callback) {
+Tunnel.prototype.restart = function (callback) {
   this.once('restart', _.iteratee(callback));
   if (this.restarting) {
     return this;
@@ -767,7 +783,7 @@ Tunnel.prototype.restart = function(callback) {
   if (_.isEmpty(all)) {
     _.defer(reset);
   }
-  _.invokeMap(active, 'stop', function() {
+  _.invokeMap(active, 'stop', function () {
     _.pull(active, this);
     stop();
   });
@@ -786,7 +802,7 @@ Tunnel.prototype.restart = function(callback) {
  * @param {Function} callback The function called once the tunnel is started.
  * @param {Object} Returns the tunnel instance.
  */
-Tunnel.prototype.start = function(callback) {
+Tunnel.prototype.start = function (callback) {
   this.once('start', _.iteratee(callback));
   if (this.starting || this.running) {
     return this;
@@ -810,14 +826,14 @@ Tunnel.prototype.start = function(callback) {
  * @memberOf Tunnel
  * @param {Object} Returns the tunnel instance.
  */
-Tunnel.prototype.dequeue = function() {
+Tunnel.prototype.dequeue = function () {
   var count = 0,
       jobs = this.jobs,
       active = jobs.active,
       queue = jobs.queue,
       throttled = this.throttled;
 
-  while (queue.length && (active.length < throttled)) {
+  while (queue.length && active.length < throttled) {
     var job = queue.shift();
     active.push(job);
     _.delay(_.bind(job.start, job), ++count * 1000);
@@ -832,7 +848,7 @@ Tunnel.prototype.dequeue = function() {
  * @param {Function} callback The function called once the tunnel is stopped.
  * @param {Object} Returns the tunnel instance.
  */
-Tunnel.prototype.stop = function(callback) {
+Tunnel.prototype.stop = function (callback) {
   this.once('stop', _.iteratee(callback));
   if (this.stopping) {
     return this;
@@ -845,7 +861,7 @@ Tunnel.prototype.stop = function(callback) {
   var jobs = this.jobs,
       active = jobs.active;
 
-  var stop = _.after(active.length, _.bind(function() {
+  var stop = _.after(active.length, _.bind(function () {
     var onStop = _.bind(onGenericStop, this);
     if (this.running) {
       this.connection.stop(onStop);
@@ -858,7 +874,7 @@ Tunnel.prototype.stop = function(callback) {
   if (_.isEmpty(active)) {
     _.defer(stop);
   }
-  _.invokeMap(active, 'stop', function() {
+  _.invokeMap(active, 'stop', function () {
     _.pull(active, this);
     stop();
   });
@@ -873,15 +889,15 @@ Tunnel.prototype.stop = function(callback) {
 /*----------------------------------------------------------------------------*/
 
 // Cleanup any inline logs when exited via `ctrl+c`.
-process.on('SIGINT', function() {
+process.on('SIGINT', function () {
   logInline();
   process.exit();
 });
 
 // Create a web server for the current working directory.
-http.createServer(function(req, res) {
+_http2.default.createServer(function (req, res) {
   // See http://msdn.microsoft.com/en-us/library/ff955275(v=vs.85).aspx.
-  if (compatMode && path.extname(url.parse(req.url).pathname) == '.html') {
+  if (compatMode && _path2.default.extname(_url2.default.parse(req.url).pathname) == '.html') {
     res.setHeader('X-UA-Compatible', 'IE=' + compatMode);
   }
   mount(req, res);
@@ -900,7 +916,7 @@ var tunnel = new Tunnel({
   'timeout': tunnelTimeout
 });
 
-tunnel.on('complete', function(success) {
+tunnel.on('complete', function (success) {
   process.exit(success ? 0 : 1);
 });
 
