@@ -1,2 +1,5 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var placeholder = {};
-export { placeholder as placeholderjs };
+exports.placeholderjs = placeholder;
