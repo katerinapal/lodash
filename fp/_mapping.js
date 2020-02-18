@@ -1,3 +1,6 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var _mappingjs_aliasToReal = {
 
   // Lodash aliases.
@@ -68,52 +71,10 @@ var _mappingjs_aliasToReal = {
 };
 
 var _mappingjs_aryMethod = {
-  '1': [
-    'assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create',
-    'curry', 'curryRight', 'defaultsAll', 'defaultsDeepAll', 'floor', 'flow',
-    'flowRight', 'fromPairs', 'invert', 'iteratee', 'memoize', 'method', 'mergeAll',
-    'methodOf', 'mixin', 'nthArg', 'over', 'overEvery', 'overSome','rest', 'reverse',
-    'round', 'runInContext', 'spread', 'template', 'trim', 'trimEnd', 'trimStart',
-    'uniqueId', 'words', 'zipAll'
-  ],
-  '2': [
-    'add', 'after', 'ary', 'assign', 'assignAllWith', 'assignIn', 'assignInAllWith',
-    'at', 'before', 'bind', 'bindAll', 'bindKey', 'chunk', 'cloneDeepWith',
-    'cloneWith', 'concat', 'conformsTo', 'countBy', 'curryN', 'curryRightN',
-    'debounce', 'defaults', 'defaultsDeep', 'defaultTo', 'delay', 'difference',
-    'divide', 'drop', 'dropRight', 'dropRightWhile', 'dropWhile', 'endsWith', 'eq',
-    'every', 'filter', 'find', 'findIndex', 'findKey', 'findLast', 'findLastIndex',
-    'findLastKey', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach',
-    'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight', 'get',
-    'groupBy', 'gt', 'gte', 'has', 'hasIn', 'includes', 'indexOf', 'intersection',
-    'invertBy', 'invoke', 'invokeMap', 'isEqual', 'isMatch', 'join', 'keyBy',
-    'lastIndexOf', 'lt', 'lte', 'map', 'mapKeys', 'mapValues', 'matchesProperty',
-    'maxBy', 'meanBy', 'merge', 'mergeAllWith', 'minBy', 'multiply', 'nth', 'omit',
-    'omitBy', 'overArgs', 'pad', 'padEnd', 'padStart', 'parseInt', 'partial',
-    'partialRight', 'partition', 'pick', 'pickBy', 'propertyOf', 'pull', 'pullAll',
-    'pullAt', 'random', 'range', 'rangeRight', 'rearg', 'reject', 'remove',
-    'repeat', 'restFrom', 'result', 'sampleSize', 'some', 'sortBy', 'sortedIndex',
-    'sortedIndexOf', 'sortedLastIndex', 'sortedLastIndexOf', 'sortedUniqBy',
-    'split', 'spreadFrom', 'startsWith', 'subtract', 'sumBy', 'take', 'takeRight',
-    'takeRightWhile', 'takeWhile', 'tap', 'throttle', 'thru', 'times', 'trimChars',
-    'trimCharsEnd', 'trimCharsStart', 'truncate', 'union', 'uniqBy', 'uniqWith',
-    'unset', 'unzipWith', 'without', 'wrap', 'xor', 'zip', 'zipObject',
-    'zipObjectDeep'
-  ],
-  '3': [
-    'assignInWith', 'assignWith', 'clamp', 'differenceBy', 'differenceWith',
-    'findFrom', 'findIndexFrom', 'findLastFrom', 'findLastIndexFrom', 'getOr',
-    'includesFrom', 'indexOfFrom', 'inRange', 'intersectionBy', 'intersectionWith',
-    'invokeArgs', 'invokeArgsMap', 'isEqualWith', 'isMatchWith', 'flatMapDepth',
-    'lastIndexOfFrom', 'mergeWith', 'orderBy', 'padChars', 'padCharsEnd',
-    'padCharsStart', 'pullAllBy', 'pullAllWith', 'rangeStep', 'rangeStepRight',
-    'reduce', 'reduceRight', 'replace', 'set', 'slice', 'sortedIndexBy',
-    'sortedLastIndexBy', 'transform', 'unionBy', 'unionWith', 'update', 'xorBy',
-    'xorWith', 'zipWith'
-  ],
-  '4': [
-    'fill', 'setWith', 'updateWith'
-  ]
+  '1': ['assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create', 'curry', 'curryRight', 'defaultsAll', 'defaultsDeepAll', 'floor', 'flow', 'flowRight', 'fromPairs', 'invert', 'iteratee', 'memoize', 'method', 'mergeAll', 'methodOf', 'mixin', 'nthArg', 'over', 'overEvery', 'overSome', 'rest', 'reverse', 'round', 'runInContext', 'spread', 'template', 'trim', 'trimEnd', 'trimStart', 'uniqueId', 'words', 'zipAll'],
+  '2': ['add', 'after', 'ary', 'assign', 'assignAllWith', 'assignIn', 'assignInAllWith', 'at', 'before', 'bind', 'bindAll', 'bindKey', 'chunk', 'cloneDeepWith', 'cloneWith', 'concat', 'conformsTo', 'countBy', 'curryN', 'curryRightN', 'debounce', 'defaults', 'defaultsDeep', 'defaultTo', 'delay', 'difference', 'divide', 'drop', 'dropRight', 'dropRightWhile', 'dropWhile', 'endsWith', 'eq', 'every', 'filter', 'find', 'findIndex', 'findKey', 'findLast', 'findLastIndex', 'findLastKey', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach', 'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight', 'get', 'groupBy', 'gt', 'gte', 'has', 'hasIn', 'includes', 'indexOf', 'intersection', 'invertBy', 'invoke', 'invokeMap', 'isEqual', 'isMatch', 'join', 'keyBy', 'lastIndexOf', 'lt', 'lte', 'map', 'mapKeys', 'mapValues', 'matchesProperty', 'maxBy', 'meanBy', 'merge', 'mergeAllWith', 'minBy', 'multiply', 'nth', 'omit', 'omitBy', 'overArgs', 'pad', 'padEnd', 'padStart', 'parseInt', 'partial', 'partialRight', 'partition', 'pick', 'pickBy', 'propertyOf', 'pull', 'pullAll', 'pullAt', 'random', 'range', 'rangeRight', 'rearg', 'reject', 'remove', 'repeat', 'restFrom', 'result', 'sampleSize', 'some', 'sortBy', 'sortedIndex', 'sortedIndexOf', 'sortedLastIndex', 'sortedLastIndexOf', 'sortedUniqBy', 'split', 'spreadFrom', 'startsWith', 'subtract', 'sumBy', 'take', 'takeRight', 'takeRightWhile', 'takeWhile', 'tap', 'throttle', 'thru', 'times', 'trimChars', 'trimCharsEnd', 'trimCharsStart', 'truncate', 'union', 'uniqBy', 'uniqWith', 'unset', 'unzipWith', 'without', 'wrap', 'xor', 'zip', 'zipObject', 'zipObjectDeep'],
+  '3': ['assignInWith', 'assignWith', 'clamp', 'differenceBy', 'differenceWith', 'findFrom', 'findIndexFrom', 'findLastFrom', 'findLastIndexFrom', 'getOr', 'includesFrom', 'indexOfFrom', 'inRange', 'intersectionBy', 'intersectionWith', 'invokeArgs', 'invokeArgsMap', 'isEqualWith', 'isMatchWith', 'flatMapDepth', 'lastIndexOfFrom', 'mergeWith', 'orderBy', 'padChars', 'padCharsEnd', 'padCharsStart', 'pullAllBy', 'pullAllWith', 'rangeStep', 'rangeStepRight', 'reduce', 'reduceRight', 'replace', 'set', 'slice', 'sortedIndexBy', 'sortedLastIndexBy', 'transform', 'unionBy', 'unionWith', 'update', 'xorBy', 'xorWith', 'zipWith'],
+  '4': ['fill', 'setWith', 'updateWith']
 };
 
 var _mappingjs_aryRearg = {
@@ -242,7 +203,7 @@ var _mappingjs_mutate = {
     'merge': true,
     'mergeAll': true,
     'mergeAllWith': true,
-    'mergeWith': true,
+    'mergeWith': true
   },
   'set': {
     'set': true,
@@ -253,7 +214,7 @@ var _mappingjs_mutate = {
   }
 };
 
-var _mappingjs_realToAlias = function() {
+var _mappingjs_realToAlias = function () {
   var hasOwnProperty = Object.prototype.hasOwnProperty,
       object = _mappingjs_aliasToReal,
       result = {};
@@ -345,15 +306,15 @@ var _mappingjs_skipRearg = {
   'zipObjectDeep': true
 };
 
-export { _mappingjs_aliasToReal };
-export { _mappingjs_aryMethod };
-export { _mappingjs_aryRearg };
-export { _mappingjs_iterateeAry };
-export { _mappingjs_iterateeRearg };
-export { _mappingjs_methodRearg };
-export { _mappingjs_methodSpread };
-export { _mappingjs_mutate };
-export { _mappingjs_realToAlias };
-export { _mappingjs_remap };
-export { _mappingjs_skipFixed };
-export { _mappingjs_skipRearg };
+exports._mappingjs_aliasToReal = _mappingjs_aliasToReal;
+exports._mappingjs_aryMethod = _mappingjs_aryMethod;
+exports._mappingjs_aryRearg = _mappingjs_aryRearg;
+exports._mappingjs_iterateeAry = _mappingjs_iterateeAry;
+exports._mappingjs_iterateeRearg = _mappingjs_iterateeRearg;
+exports._mappingjs_methodRearg = _mappingjs_methodRearg;
+exports._mappingjs_methodSpread = _mappingjs_methodSpread;
+exports._mappingjs_mutate = _mappingjs_mutate;
+exports._mappingjs_realToAlias = _mappingjs_realToAlias;
+exports._mappingjs_remap = _mappingjs_remap;
+exports._mappingjs_skipFixed = _mappingjs_skipFixed;
+exports._mappingjs_skipRearg = _mappingjs_skipRearg;
