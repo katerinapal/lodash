@@ -54,8 +54,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-	/** Used to map aliases to their real names. */
-	exports.aliasToReal = {
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var aliasToReal = {
 
 	  // Lodash aliases.
 	  'each': 'forEach',
@@ -124,65 +126,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'zipObj': 'zipObject'
 	};
 
-	/** Used to map ary to method names. */
-	exports.aryMethod = {
-	  '1': [
-	    'assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create',
-	    'curry', 'curryRight', 'defaultsAll', 'defaultsDeepAll', 'floor', 'flow',
-	    'flowRight', 'fromPairs', 'invert', 'iteratee', 'memoize', 'method', 'mergeAll',
-	    'methodOf', 'mixin', 'nthArg', 'over', 'overEvery', 'overSome','rest', 'reverse',
-	    'round', 'runInContext', 'spread', 'template', 'trim', 'trimEnd', 'trimStart',
-	    'uniqueId', 'words', 'zipAll'
-	  ],
-	  '2': [
-	    'add', 'after', 'ary', 'assign', 'assignAllWith', 'assignIn', 'assignInAllWith',
-	    'at', 'before', 'bind', 'bindAll', 'bindKey', 'chunk', 'cloneDeepWith',
-	    'cloneWith', 'concat', 'conformsTo', 'countBy', 'curryN', 'curryRightN',
-	    'debounce', 'defaults', 'defaultsDeep', 'defaultTo', 'delay', 'difference',
-	    'divide', 'drop', 'dropRight', 'dropRightWhile', 'dropWhile', 'endsWith', 'eq',
-	    'every', 'filter', 'find', 'findIndex', 'findKey', 'findLast', 'findLastIndex',
-	    'findLastKey', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach',
-	    'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight', 'get',
-	    'groupBy', 'gt', 'gte', 'has', 'hasIn', 'includes', 'indexOf', 'intersection',
-	    'invertBy', 'invoke', 'invokeMap', 'isEqual', 'isMatch', 'join', 'keyBy',
-	    'lastIndexOf', 'lt', 'lte', 'map', 'mapKeys', 'mapValues', 'matchesProperty',
-	    'maxBy', 'meanBy', 'merge', 'mergeAllWith', 'minBy', 'multiply', 'nth', 'omit',
-	    'omitBy', 'overArgs', 'pad', 'padEnd', 'padStart', 'parseInt', 'partial',
-	    'partialRight', 'partition', 'pick', 'pickBy', 'propertyOf', 'pull', 'pullAll',
-	    'pullAt', 'random', 'range', 'rangeRight', 'rearg', 'reject', 'remove',
-	    'repeat', 'restFrom', 'result', 'sampleSize', 'some', 'sortBy', 'sortedIndex',
-	    'sortedIndexOf', 'sortedLastIndex', 'sortedLastIndexOf', 'sortedUniqBy',
-	    'split', 'spreadFrom', 'startsWith', 'subtract', 'sumBy', 'take', 'takeRight',
-	    'takeRightWhile', 'takeWhile', 'tap', 'throttle', 'thru', 'times', 'trimChars',
-	    'trimCharsEnd', 'trimCharsStart', 'truncate', 'union', 'uniqBy', 'uniqWith',
-	    'unset', 'unzipWith', 'without', 'wrap', 'xor', 'zip', 'zipObject',
-	    'zipObjectDeep'
-	  ],
-	  '3': [
-	    'assignInWith', 'assignWith', 'clamp', 'differenceBy', 'differenceWith',
-	    'findFrom', 'findIndexFrom', 'findLastFrom', 'findLastIndexFrom', 'getOr',
-	    'includesFrom', 'indexOfFrom', 'inRange', 'intersectionBy', 'intersectionWith',
-	    'invokeArgs', 'invokeArgsMap', 'isEqualWith', 'isMatchWith', 'flatMapDepth',
-	    'lastIndexOfFrom', 'mergeWith', 'orderBy', 'padChars', 'padCharsEnd',
-	    'padCharsStart', 'pullAllBy', 'pullAllWith', 'rangeStep', 'rangeStepRight',
-	    'reduce', 'reduceRight', 'replace', 'set', 'slice', 'sortedIndexBy',
-	    'sortedLastIndexBy', 'transform', 'unionBy', 'unionWith', 'update', 'xorBy',
-	    'xorWith', 'zipWith'
-	  ],
-	  '4': [
-	    'fill', 'setWith', 'updateWith'
-	  ]
+	var aryMethod = {
+	  '1': ['assignAll', 'assignInAll', 'attempt', 'castArray', 'ceil', 'create', 'curry', 'curryRight', 'defaultsAll', 'defaultsDeepAll', 'floor', 'flow', 'flowRight', 'fromPairs', 'invert', 'iteratee', 'memoize', 'method', 'mergeAll', 'methodOf', 'mixin', 'nthArg', 'over', 'overEvery', 'overSome', 'rest', 'reverse', 'round', 'runInContext', 'spread', 'template', 'trim', 'trimEnd', 'trimStart', 'uniqueId', 'words', 'zipAll'],
+	  '2': ['add', 'after', 'ary', 'assign', 'assignAllWith', 'assignIn', 'assignInAllWith', 'at', 'before', 'bind', 'bindAll', 'bindKey', 'chunk', 'cloneDeepWith', 'cloneWith', 'concat', 'conformsTo', 'countBy', 'curryN', 'curryRightN', 'debounce', 'defaults', 'defaultsDeep', 'defaultTo', 'delay', 'difference', 'divide', 'drop', 'dropRight', 'dropRightWhile', 'dropWhile', 'endsWith', 'eq', 'every', 'filter', 'find', 'findIndex', 'findKey', 'findLast', 'findLastIndex', 'findLastKey', 'flatMap', 'flatMapDeep', 'flattenDepth', 'forEach', 'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight', 'get', 'groupBy', 'gt', 'gte', 'has', 'hasIn', 'includes', 'indexOf', 'intersection', 'invertBy', 'invoke', 'invokeMap', 'isEqual', 'isMatch', 'join', 'keyBy', 'lastIndexOf', 'lt', 'lte', 'map', 'mapKeys', 'mapValues', 'matchesProperty', 'maxBy', 'meanBy', 'merge', 'mergeAllWith', 'minBy', 'multiply', 'nth', 'omit', 'omitBy', 'overArgs', 'pad', 'padEnd', 'padStart', 'parseInt', 'partial', 'partialRight', 'partition', 'pick', 'pickBy', 'propertyOf', 'pull', 'pullAll', 'pullAt', 'random', 'range', 'rangeRight', 'rearg', 'reject', 'remove', 'repeat', 'restFrom', 'result', 'sampleSize', 'some', 'sortBy', 'sortedIndex', 'sortedIndexOf', 'sortedLastIndex', 'sortedLastIndexOf', 'sortedUniqBy', 'split', 'spreadFrom', 'startsWith', 'subtract', 'sumBy', 'take', 'takeRight', 'takeRightWhile', 'takeWhile', 'tap', 'throttle', 'thru', 'times', 'trimChars', 'trimCharsEnd', 'trimCharsStart', 'truncate', 'union', 'uniqBy', 'uniqWith', 'unset', 'unzipWith', 'without', 'wrap', 'xor', 'zip', 'zipObject', 'zipObjectDeep'],
+	  '3': ['assignInWith', 'assignWith', 'clamp', 'differenceBy', 'differenceWith', 'findFrom', 'findIndexFrom', 'findLastFrom', 'findLastIndexFrom', 'getOr', 'includesFrom', 'indexOfFrom', 'inRange', 'intersectionBy', 'intersectionWith', 'invokeArgs', 'invokeArgsMap', 'isEqualWith', 'isMatchWith', 'flatMapDepth', 'lastIndexOfFrom', 'mergeWith', 'orderBy', 'padChars', 'padCharsEnd', 'padCharsStart', 'pullAllBy', 'pullAllWith', 'rangeStep', 'rangeStepRight', 'reduce', 'reduceRight', 'replace', 'set', 'slice', 'sortedIndexBy', 'sortedLastIndexBy', 'transform', 'unionBy', 'unionWith', 'update', 'xorBy', 'xorWith', 'zipWith'],
+	  '4': ['fill', 'setWith', 'updateWith']
 	};
 
-	/** Used to map ary to rearg configs. */
-	exports.aryRearg = {
+	var aryRearg = {
 	  '2': [1, 0],
 	  '3': [2, 0, 1],
 	  '4': [3, 2, 0, 1]
 	};
 
-	/** Used to map method names to their iteratee ary. */
-	exports.iterateeAry = {
+	var iterateeAry = {
 	  'dropRightWhile': 1,
 	  'dropWhile': 1,
 	  'every': 1,
@@ -221,14 +178,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'transform': 2
 	};
 
-	/** Used to map method names to iteratee rearg configs. */
-	exports.iterateeRearg = {
+	var iterateeRearg = {
 	  'mapKeys': [1],
 	  'reduceRight': [1, 0]
 	};
 
-	/** Used to map method names to rearg configs. */
-	exports.methodRearg = {
+	var methodRearg = {
 	  'assignInAllWith': [1, 0],
 	  'assignInWith': [1, 2, 0],
 	  'assignAllWith': [1, 0],
@@ -260,8 +215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'zipWith': [1, 2, 0]
 	};
 
-	/** Used to map method names to spread configs. */
-	exports.methodSpread = {
+	var methodSpread = {
 	  'assignAll': { 'start': 0 },
 	  'assignAllWith': { 'start': 0 },
 	  'assignInAll': { 'start': 0 },
@@ -278,8 +232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'zipAll': { 'start': 0 }
 	};
 
-	/** Used to identify methods which mutate arrays or objects. */
-	exports.mutate = {
+	var mutate = {
 	  'array': {
 	    'fill': true,
 	    'pull': true,
@@ -306,7 +259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'merge': true,
 	    'mergeAll': true,
 	    'mergeAllWith': true,
-	    'mergeWith': true,
+	    'mergeWith': true
 	  },
 	  'set': {
 	    'set': true,
@@ -317,10 +270,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 
-	/** Used to map real names to their aliases. */
-	exports.realToAlias = (function() {
+	var realToAlias = function () {
 	  var hasOwnProperty = Object.prototype.hasOwnProperty,
-	      object = exports.aliasToReal,
+	      object = aliasToReal,
 	      result = {};
 
 	  for (var key in object) {
@@ -332,10 +284,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	  return result;
-	}());
+	}();
 
-	/** Used to map method names to other names. */
-	exports.remap = {
+	var remap = {
 	  'assignAll': 'assign',
 	  'assignAllWith': 'assignWith',
 	  'assignInAll': 'assignIn',
@@ -370,8 +321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'zipAll': 'zip'
 	};
 
-	/** Used to track methods that skip fixing their arity. */
-	exports.skipFixed = {
+	var skipFixed = {
 	  'castArray': true,
 	  'flow': true,
 	  'flowRight': true,
@@ -381,8 +331,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'runInContext': true
 	};
 
-	/** Used to track methods that skip rearranging arguments. */
-	exports.skipRearg = {
+	var skipRearg = {
 	  'add': true,
 	  'assign': true,
 	  'assignIn': true,
@@ -412,6 +361,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'zipObject': true,
 	  'zipObjectDeep': true
 	};
+
+	exports.aliasToReal = aliasToReal;
+	exports.aryMethod = aryMethod;
+	exports.aryRearg = aryRearg;
+	exports.iterateeAry = iterateeAry;
+	exports.iterateeRearg = iterateeRearg;
+	exports.methodRearg = methodRearg;
+	exports.methodSpread = methodSpread;
+	exports.mutate = mutate;
+	exports.realToAlias = realToAlias;
+	exports.remap = remap;
+	exports.skipFixed = skipFixed;
+	exports.skipRearg = skipRearg;
 
 
 /***/ })

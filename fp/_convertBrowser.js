@@ -1,4 +1,4 @@
-import { baseConvert } from "./_baseConvert";
+var _baseConvert = require('./_baseConvert');
 
 /**
  * Converts `lodash` to an immutable auto-curried iteratee-first data-last
@@ -9,7 +9,7 @@ import { baseConvert } from "./_baseConvert";
  * @returns {Function} Returns the converted `lodash`.
  */
 function browserConvert(lodash, options) {
-  return baseConvert(lodash, lodash, options);
+  return (0, _baseConvert.baseConvert)(lodash, lodash, options);
 }
 
 if (typeof _ == 'function' && typeof _.runInContext == 'function') {
