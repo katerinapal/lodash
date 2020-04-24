@@ -1,3 +1,4 @@
+"use strict";
 /**
  * The default argument placeholder value for methods.
  *

@@ -54,6 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
+	"use strict";
 	/** Used to map aliases to their real names. */
 	exports.aliasToReal = {
 

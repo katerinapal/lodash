@@ -54,6 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	"use strict";
 	var baseConvert = __webpack_require__(1);
 
 	/**
@@ -78,6 +79,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	"use strict";
 	var mapping = __webpack_require__(2),
 	    fallbackHolder = __webpack_require__(3);
 
@@ -653,6 +655,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ (function(module, exports) {
 
+	"use strict";
 	/** Used to map aliases to their real names. */
 	exports.aliasToReal = {
 
@@ -1017,6 +1020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ (function(module, exports) {
 
+	"use strict";
 	/**
 	 * The default argument placeholder value for methods.
 	 *

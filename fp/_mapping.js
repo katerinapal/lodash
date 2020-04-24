@@ -1,3 +1,4 @@
+"use strict";
 /** Used to map aliases to their real names. */
 exports.aliasToReal = {
 

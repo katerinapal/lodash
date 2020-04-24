@@ -1,4 +1,5 @@
-;(function(window) {
+"use strict";
+(function(window) {
   'use strict';
 
   /** The base path of the lodash builds. */

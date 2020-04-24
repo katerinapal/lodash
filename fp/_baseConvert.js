@@ -1,3 +1,4 @@
+"use strict";
 var mapping = require('./_mapping'),
     fallbackHolder = require('./placeholder');
 
