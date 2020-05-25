@@ -1,14 +1,14 @@
 #!/usr/bin/env node
+import ext_fs_fs from "fs";
+import ext_path_path from "path";
 'use strict';
 
-var _ = require('../lodash'),
-    fs = require('fs'),
-    path = require('path');
+var _ = {};
 
 var args = (args = process.argv)
   .slice((args[0] === process.execPath || args[0] === 'node') ? 2 : 0);
 
-var filePath = path.resolve(args[1]),
+var filePath = ext_path_path.resolve(args[1]),
     reLine = /.*/gm;
 
 var pattern = (function() {
@@ -21,7 +21,7 @@ var pattern = (function() {
 
 /*----------------------------------------------------------------------------*/
 
-fs.writeFileSync(filePath, fs.readFileSync(filePath, 'utf8').replace(pattern, function(match) {
+ext_fs_fs.writeFileSync(filePath, ext_fs_fs.readFileSync(filePath, 'utf8').replace(pattern, function(match) {
   var snippet = _.slice(arguments, -3, -2)[0];
   return match.replace(snippet, snippet.replace(reLine, ''));
 }));
