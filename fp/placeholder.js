@@ -1,6 +1,8 @@
+var placeholderjs_placeholderjs;
 /**
  * The default argument placeholder value for methods.
  *
  * @type {Object}
  */
-module.exports = {};
+placeholderjs_placeholderjs = {};
+export { placeholderjs_placeholderjs as placeholderjs };

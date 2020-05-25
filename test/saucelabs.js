@@ -1,22 +1,23 @@
 #!/usr/bin/env node
+import ext_events_EventEmitter from "events";
+import ext_http_http from "http";
+import ext_path_path from "path";
+import ext_url_url from "url";
+import ext_util_util from "util";
+import ext_chalk_chalk from "chalk";
+import ext_ecstatic_ecstatic from "ecstatic";
+import ext_request_request from "request";
+import ext_saucetunnel_SauceTunnel from "sauce-tunnel";
 'use strict';
 
 /** Environment shortcut. */
 var env = process.env;
 
 /** Load Node.js modules. */
-var EventEmitter = require('events').EventEmitter,
-    http = require('http'),
-    path = require('path'),
-    url = require('url'),
-    util = require('util');
+var EventEmitter = ext_events_EventEmitter.EventEmitter;
 
 /** Load other modules. */
-var _ = require('../lodash.js'),
-    chalk = require('chalk'),
-    ecstatic = require('ecstatic'),
-    request = require('request'),
-    SauceTunnel = require('sauce-tunnel');
+var _ = {};
 
 /** Used for Sauce Labs credentials. */
 var accessKey = env.SAUCE_ACCESS_KEY,
@@ -27,7 +28,7 @@ var maxJobRetries = 3,
     maxTunnelRetries = 3;
 
 /** Used as the static file server middleware. */
-var mount = ecstatic({
+var mount = ext_ecstatic_ecstatic({
   'cache': 'no-cache',
   'root': process.cwd()
 });
@@ -450,7 +451,7 @@ function onJobStatus(error, res, body) {
 
     logInline();
     if (failures) {
-      console.error(label + ' %s ' + chalk.red('failed') + ' %d test' + (failures > 1 ? 's' : '') + '. %s', description, failures, details);
+      console.error(label + ' %s ' + ext_chalk_chalk.red('failed') + ' %d test' + (failures > 1 ? 's' : '') + '. %s', description, failures, details);
     }
     else if (tunnel.attempts < tunnel.retries) {
       tunnel.restart();
@@ -460,12 +461,12 @@ function onJobStatus(error, res, body) {
       if (message === undefined) {
         message = 'Results are unavailable. ' + details;
       }
-      console.error(label, description, chalk.red('failed') + ';', message);
+      console.error(label, description, ext_chalk_chalk.red('failed') + ';', message);
     }
   }
   else {
     logInline();
-    console.log(label, description, chalk.green('passed'));
+    console.log(label, description, ext_chalk_chalk.green('passed'));
   }
   this.running = false;
   this.emit('complete');
@@ -526,7 +527,7 @@ function Job(properties) {
   this._pollerId = this.id = this.result = this.taskId = this.url = null;
 }
 
-util.inherits(Job, EventEmitter);
+ext_util_util.inherits(Job, EventEmitter);
 
 /**
  * Removes the job.
@@ -547,7 +548,7 @@ Job.prototype.remove = function(callback) {
       _.defer(onRemove);
       return;
     }
-    request.del(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}')(this), {
+    ext_request_request.del(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}')(this), {
       'auth': { 'user': this.user, 'pass': this.pass }
     }, onRemove);
   });
@@ -607,7 +608,7 @@ Job.prototype.start = function(callback) {
     return this;
   }
   this.starting = true;
-  request.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests')(this), {
+  ext_request_request.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests')(this), {
     'auth': { 'user': this.user, 'pass': this.pass },
     'json': this.options
   }, _.bind(onJobStart, this));
@@ -629,7 +630,7 @@ Job.prototype.status = function(callback) {
   }
   this._pollerId = null;
   this.checking = true;
-  request.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests/status')(this), {
+  ext_request_request.post(_.template('https://saucelabs.com/rest/v1/${user}/js-tests/status')(this), {
     'auth': { 'user': this.user, 'pass': this.pass },
     'json': { 'js tests': [this.taskId] }
   }, _.bind(onJobStatus, this));
@@ -660,7 +661,7 @@ Job.prototype.stop = function(callback) {
     _.defer(onStop);
     return this;
   }
-  request.put(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}/stop')(this), {
+  ext_request_request.put(_.template('https://saucelabs.com/rest/v1/${user}/jobs/${id}/stop')(this), {
     'auth': { 'user': this.user, 'pass': this.pass }
   }, onStop);
 
@@ -732,10 +733,10 @@ function Tunnel(properties) {
   this.attempts = 0;
   this.restarting = this.running = this.starting = this.stopping = false;
   this.jobs = { 'active': active, 'all': all, 'queue': queue };
-  this.connection = new SauceTunnel(this.user, this.pass, this.id, this.tunneled, ['-P', '0']);
+  this.connection = new ext_saucetunnel_SauceTunnel(this.user, this.pass, this.id, this.tunneled, ['-P', '0']);
 }
 
-util.inherits(Tunnel, EventEmitter);
+ext_util_util.inherits(Tunnel, EventEmitter);
 
 /**
  * Restarts the tunnel.
@@ -878,9 +879,9 @@ process.on('SIGINT', function() {
 });
 
 // Create a web server for the current working directory.
-http.createServer(function(req, res) {
+ext_http_http.createServer(function(req, res) {
   // See http://msdn.microsoft.com/en-us/library/ff955275(v=vs.85).aspx.
-  if (compatMode && path.extname(url.parse(req.url).pathname) == '.html') {
+  if (compatMode && ext_path_path.extname(ext_url_url.parse(req.url).pathname) == '.html') {
     res.setHeader('X-UA-Compatible', 'IE=' + compatMode);
   }
   mount(req, res);

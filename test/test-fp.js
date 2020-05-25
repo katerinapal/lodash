@@ -1,4 +1,7 @@
-;(function() {
+import ext_qunitextras_qunitextras from "qunit-extras";
+import { baseConvert as fp_baseConvertjs_baseConvert } from "../fp/_baseConvert.js";
+import { fp_mappingjs_obj } from "../fp/_mapping.js";
+(function() {
   'use strict';
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
@@ -32,16 +35,16 @@
   /*--------------------------------------------------------------------------*/
 
   /** Load QUnit and extras. */
-  var QUnit = root.QUnit || require('qunit-extras');
+  var QUnit = root.QUnit || ext_qunitextras_qunitextras;
 
   /** Load stable Lodash. */
-  var _ = root._ || require('../lodash.js');
+  var _ = root._ || {};
 
   var convert = (function() {
-    var baseConvert = root.fp || require('../fp/_baseConvert.js');
+    var baseConvert = root.fp || fp_baseConvertjs_baseConvert;
     if (!root.fp) {
       return function(name, func, options) {
-        return baseConvert(_, name, func, options);
+        return fp_baseConvertjs_baseConvert(_, name, func, options);
       };
     }
     return function(name, func, options) {
@@ -51,8 +54,8 @@
         name = undefined;
       }
       return name === undefined
-        ? baseConvert(func, options)
-        : baseConvert(_.runInContext(), options)[name];
+        ? fp_baseConvertjs_baseConvert(func, options)
+        : fp_baseConvertjs_baseConvert(_.runInContext(), options)[name];
     };
   }());
 
@@ -68,7 +71,7 @@
     ? (fp = _.noConflict(), _ = root._, fp)
     : convert(_.runInContext());
 
-  var mapping = root.mapping || require('../fp/_mapping.js');
+  var mapping = root.mapping || fp_mappingjs_obj;
 
   /*--------------------------------------------------------------------------*/
 
@@ -92,10 +95,10 @@
     console.log('Running lodash/fp tests.');
   }
 
-  QUnit.module('convert module');
+  ext_qunitextras_qunitextras.module('convert module');
 
   (function() {
-    QUnit.test('should work with `name` and `func`', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with `name` and `func`', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3, 4],
@@ -106,7 +109,7 @@
       assert.deepEqual(actual, [1, 3]);
     });
 
-    QUnit.test('should work with `name`, `func`, and `options`', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with `name`, `func`, and `options`', function(assert) {
       assert.expect(3);
 
       var array = [1, 2, 3, 4],
@@ -121,7 +124,7 @@
       assert.deepEqual(remove(), []);
     });
 
-    QUnit.test('should work with an object', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with an object', function(assert) {
       assert.expect(2);
 
       if (!document) {
@@ -137,7 +140,7 @@
       }
     });
 
-    QUnit.test('should work with an object and `options`', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with an object and `options`', function(assert) {
       assert.expect(3);
 
       if (!document) {
@@ -154,7 +157,7 @@
       }
     });
 
-    QUnit.test('should work with lodash and `options`', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with lodash and `options`', function(assert) {
       assert.expect(3);
 
       var array = [1, 2, 3, 4],
@@ -166,7 +169,7 @@
       assert.deepEqual(lodash.remove(), []);
     });
 
-    QUnit.test('should work with `runInContext` and `options`', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with `runInContext` and `options`', function(assert) {
       assert.expect(3);
 
       var array = [1, 2, 3, 4],
@@ -179,7 +182,7 @@
       assert.deepEqual(lodash.remove(), []);
     });
 
-    QUnit.test('should accept a variety of options', function(assert) {
+    ext_qunitextras_qunitextras.test('should accept a variety of options', function(assert) {
       assert.expect(8);
 
       var array = [1, 2, 3, 4],
@@ -213,7 +216,7 @@
       assert.deepEqual(actual, [1, 3]);
     });
 
-    QUnit.test('should respect the `cap` option', function(assert) {
+    ext_qunitextras_qunitextras.test('should respect the `cap` option', function(assert) {
       assert.expect(1);
 
       var iteratee = convert('iteratee', _.iteratee, { 'cap': false });
@@ -225,7 +228,7 @@
       assert.deepEqual(func(1, 2, 3), [1, 2, 3]);
     });
 
-    QUnit.test('should respect the `rearg` option', function(assert) {
+    ext_qunitextras_qunitextras.test('should respect the `rearg` option', function(assert) {
       assert.expect(1);
 
       var add = convert('add', _.add, { 'rearg': true });
@@ -233,7 +236,7 @@
       assert.strictEqual(add('2')('1'), '12');
     });
 
-    QUnit.test('should add a `placeholder` property', function(assert) {
+    ext_qunitextras_qunitextras.test('should add a `placeholder` property', function(assert) {
       assert.expect(2);
 
       if (!document) {
@@ -250,10 +253,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('method.convert');
+  ext_qunitextras_qunitextras.module('method.convert');
 
   (function() {
-    QUnit.test('should exist on unconverted methods', function(assert) {
+    ext_qunitextras_qunitextras.test('should exist on unconverted methods', function(assert) {
       assert.expect(2);
 
       var array = [],
@@ -263,7 +266,7 @@
       assert.strictEqual(isArray()(array), true);
     });
 
-    QUnit.test('should convert method aliases', function(assert) {
+    ext_qunitextras_qunitextras.test('should convert method aliases', function(assert) {
       assert.expect(1);
 
       var all = fp.all.convert({ 'rearg': false }),
@@ -272,7 +275,7 @@
       assert.strictEqual(actual, false);
     });
 
-    QUnit.test('should convert remapped methods', function(assert) {
+    ext_qunitextras_qunitextras.test('should convert remapped methods', function(assert) {
       assert.expect(1);
 
       var extendAll = fp.extendAll.convert({ 'immutable': false }),
@@ -285,13 +288,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('convert methods');
+  ext_qunitextras_qunitextras.module('convert methods');
 
   _.each(['fp.convert', 'method.convert'], function(methodName) {
     var isFp = methodName == 'fp.convert',
         func = isFp ? fp.convert : fp.remove.convert;
 
-    QUnit.test('`' + methodName + '` should work with an object', function(assert) {
+    ext_qunitextras_qunitextras.test('`' + methodName + '` should work with an object', function(assert) {
       assert.expect(3);
 
       var array = [1, 2, 3, 4],
@@ -304,7 +307,7 @@
       assert.deepEqual(remove(), []);
     });
 
-    QUnit.test('`' + methodName + '` should extend existing configs', function(assert) {
+    ext_qunitextras_qunitextras.test('`' + methodName + '` should extend existing configs', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3, 4],
@@ -319,10 +322,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('method arity checks');
+  ext_qunitextras_qunitextras.module('method arity checks');
 
   (function() {
-    QUnit.test('should wrap methods with an arity > `1`', function(assert) {
+    ext_qunitextras_qunitextras.test('should wrap methods with an arity > `1`', function(assert) {
       assert.expect(1);
 
       var methodNames = _.filter(_.functions(fp), function(methodName) {
@@ -332,14 +335,14 @@
       assert.deepEqual(methodNames, []);
     });
 
-    QUnit.test('should have >= arity of `aryMethod` designation', function(assert) {
+    ext_qunitextras_qunitextras.test('should have >= arity of `aryMethod` designation', function(assert) {
       assert.expect(4);
 
       _.times(4, function(index) {
         var aryCap = index + 1;
 
-        var methodNames = _.filter(mapping.aryMethod[aryCap], function(methodName) {
-          var key = _.get(mapping.remap, methodName, methodName),
+        var methodNames = _.filter(fp_mappingjs_obj[aryCap], function(methodName) {
+          var key = _.get(fp_mappingjs_obj, methodName, methodName),
               arity = _[key].length;
 
           return arity != 0 && arity < aryCap;
@@ -352,13 +355,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('method aliases');
+  ext_qunitextras_qunitextras.module('method aliases');
 
   (function() {
-    QUnit.test('should have correct aliases', function(assert) {
+    ext_qunitextras_qunitextras.test('should have correct aliases', function(assert) {
       assert.expect(1);
 
-      var actual = _.transform(mapping.aliasToReal, function(result, realName, alias) {
+      var actual = _.transform(fp_mappingjs_obj, function(result, realName, alias) {
         result.push([alias, fp[alias] === fp[realName]]);
       }, []);
 
@@ -368,10 +371,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('method ary caps');
+  ext_qunitextras_qunitextras.module('method ary caps');
 
   (function() {
-    QUnit.test('should have a cap of 1', function(assert) {
+    ext_qunitextras_qunitextras.test('should have a cap of 1', function(assert) {
       assert.expect(1);
 
       var funcMethods = [
@@ -380,9 +383,9 @@
       ];
 
       var exceptions = funcMethods.concat('mixin', 'nthArg', 'template'),
-          expected = _.map(mapping.aryMethod[1], _.constant(true));
+          expected = _.map(fp_mappingjs_obj[1], _.constant(true));
 
-      var actual = _.map(mapping.aryMethod[1], function(methodName) {
+      var actual = _.map(fp_mappingjs_obj[1], function(methodName) {
         var arg = _.includes(funcMethods, methodName) ? _.noop : 1,
             result = _.attempt(function() { return fp[methodName](arg); });
 
@@ -399,7 +402,7 @@
       assert.deepEqual(actual, expected);
     });
 
-    QUnit.test('should have a cap of 2', function(assert) {
+    ext_qunitextras_qunitextras.test('should have a cap of 2', function(assert) {
       assert.expect(1);
 
       var funcMethods = [
@@ -409,9 +412,9 @@
       ];
 
       var exceptions = _.without(funcMethods.concat('matchesProperty'), 'delay'),
-          expected = _.map(mapping.aryMethod[2], _.constant(true));
+          expected = _.map(fp_mappingjs_obj[2], _.constant(true));
 
-      var actual = _.map(mapping.aryMethod[2], function(methodName) {
+      var actual = _.map(fp_mappingjs_obj[2], function(methodName) {
         var args = _.includes(funcMethods, methodName) ? [methodName == 'curryN' ? 1 : _.noop, _.noop] : [1, []],
             result = _.attempt(function() { return fp[methodName](args[0])(args[1]); });
 
@@ -428,7 +431,7 @@
       assert.deepEqual(actual, expected);
     });
 
-    QUnit.test('should have a cap of 3', function(assert) {
+    ext_qunitextras_qunitextras.test('should have a cap of 3', function(assert) {
       assert.expect(1);
 
       var funcMethods = [
@@ -436,9 +439,9 @@
         'reduceRight', 'transform', 'zipWith'
       ];
 
-      var expected = _.map(mapping.aryMethod[3], _.constant(true));
+      var expected = _.map(fp_mappingjs_obj[3], _.constant(true));
 
-      var actual = _.map(mapping.aryMethod[3], function(methodName) {
+      var actual = _.map(fp_mappingjs_obj[3], function(methodName) {
         var args = _.includes(funcMethods, methodName) ? [_.noop, 0, 1] : [0, 1, []],
             result = _.attempt(function() { return fp[methodName](args[0])(args[1])(args[2]); });
 
@@ -455,10 +458,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('methods that use `indexOf`');
+  ext_qunitextras_qunitextras.module('methods that use `indexOf`');
 
   (function() {
-    QUnit.test('should work with `fp.indexOf`', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with `fp.indexOf`', function(assert) {
       assert.expect(10);
 
       var array = ['a', 'b', 'c'],
@@ -499,10 +502,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('cherry-picked methods');
+  ext_qunitextras_qunitextras.module('cherry-picked methods');
 
   (function() {
-    QUnit.test('should provide the correct `iteratee` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `iteratee` arguments', function(assert) {
       assert.expect(4);
 
       var args,
@@ -540,7 +543,7 @@
       assert.deepEqual(args, isFIFO ? [0, 1] : [0, 2]);
     });
 
-    QUnit.test('should not support shortcut fusion', function(assert) {
+    ext_qunitextras_qunitextras.test('should not support shortcut fusion', function(assert) {
       assert.expect(3);
 
       var array = fp.range(0, LARGE_ARRAY_SIZE),
@@ -575,24 +578,24 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('iteratee shorthands');
+  ext_qunitextras_qunitextras.module('iteratee shorthands');
 
   (function() {
     var objects = [{ 'a': 1, 'b': 2 }, { 'a': 3, 'b': 4 }];
 
-    QUnit.test('should work with "_.matches" shorthands', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with "_.matches" shorthands', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(fp.filter({ 'a': 3 })(objects), [objects[1]]);
     });
 
-    QUnit.test('should work with "_.matchesProperty" shorthands', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with "_.matchesProperty" shorthands', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(fp.filter(['a', 3])(objects), [objects[1]]);
     });
 
-    QUnit.test('should work with "_.property" shorthands', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with "_.property" shorthands', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(fp.map('a')(objects), [1, 3]);
@@ -601,10 +604,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('placeholder methods');
+  ext_qunitextras_qunitextras.module('placeholder methods');
 
   (function() {
-    QUnit.test('should use `fp` as the default placeholder', function(assert) {
+    ext_qunitextras_qunitextras.test('should use `fp` as the default placeholder', function(assert) {
       assert.expect(3);
 
       var actual = fp.add(fp, 'b')('a');
@@ -617,7 +620,7 @@
       assert.deepEqual(actual, ['b']);
     });
 
-    QUnit.test('should support `fp.placeholder`', function(assert) {
+    ext_qunitextras_qunitextras.test('should support `fp.placeholder`', function(assert) {
       assert.expect(6);
 
       _.each([[], fp.__], function(ph) {
@@ -646,7 +649,7 @@
     _.each(methodNames, function(methodName) {
       var func = fp[methodName];
 
-      QUnit.test('fp.' + methodName + '` should have a `placeholder` property', function(assert) {
+      ext_qunitextras_qunitextras.test('fp.' + methodName + '` should have a `placeholder` property', function(assert) {
         assert.expect(2);
 
         assert.ok(_.isObject(func.placeholder));
@@ -657,10 +660,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('setter methods');
+  ext_qunitextras_qunitextras.module('setter methods');
 
   (function() {
-    QUnit.test('should only clone objects in `path`', function(assert) {
+    ext_qunitextras_qunitextras.test('should only clone objects in `path`', function(assert) {
       assert.expect(11);
 
       var object = { 'a': { 'b': 2, 'c': 3 }, 'd': { 'e': 4 } },
@@ -700,13 +703,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.add and fp.subtract');
+  ext_qunitextras_qunitextras.module('fp.add and fp.subtract');
 
   _.each(['add', 'subtract'], function(methodName) {
     var func = fp[methodName],
         isAdd = methodName == 'add';
 
-    QUnit.test('`fp.' + methodName + '` should not have `rearg` applied', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should not have `rearg` applied', function(assert) {
       assert.expect(1);
 
       assert.strictEqual(func('1')('2'), isAdd ? '12' : -1);
@@ -715,12 +718,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('object assignments');
+  ext_qunitextras_qunitextras.module('object assignments');
 
   _.each(['assign', 'assignIn', 'defaults', 'defaultsDeep', 'merge'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should not mutate values', function(assert) {
       assert.expect(2);
 
       var object = { 'a': 1 },
@@ -734,7 +737,7 @@
   _.each(['assignAll', 'assignInAll', 'defaultsAll', 'defaultsDeepAll', 'mergeAll'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should not mutate values', function(assert) {
       assert.expect(2);
 
       var objects = [{ 'a': 1 }, { 'b': 2 }],
@@ -748,7 +751,7 @@
   _.each(['assignWith', 'assignInWith', 'extendWith'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should provide the correct `customizer` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should provide the correct `customizer` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -764,7 +767,7 @@
   _.each(['assignAllWith', 'assignInAllWith', 'extendAllWith', 'mergeAllWith'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should not mutate values', function(assert) {
       assert.expect(2);
 
       var objects = [{ 'a': 1 }, { 'b': 2 }],
@@ -774,7 +777,7 @@
       assert.deepEqual(actual, { 'a': 1, 'b': 2 });
     });
 
-    QUnit.test('`fp.' + methodName + '` should work with more than two sources', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should work with more than two sources', function(assert) {
       assert.expect(2);
 
       var pass = false,
@@ -788,10 +791,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.castArray');
+  ext_qunitextras_qunitextras.module('fp.castArray');
 
   (function() {
-    QUnit.test('should shallow clone array values', function(assert) {
+    ext_qunitextras_qunitextras.test('should shallow clone array values', function(assert) {
       assert.expect(2);
 
       var array = [1],
@@ -801,7 +804,7 @@
       assert.notStrictEqual(actual, array);
     });
 
-    QUnit.test('should not shallow clone non-array values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not shallow clone non-array values', function(assert) {
       assert.expect(2);
 
       var object = { 'a': 1 },
@@ -811,7 +814,7 @@
       assert.strictEqual(actual[0], object);
     });
 
-    QUnit.test('should convert by name', function(assert) {
+    ext_qunitextras_qunitextras.test('should convert by name', function(assert) {
       assert.expect(4);
 
       var array = [1],
@@ -830,12 +833,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('curry methods');
+  ext_qunitextras_qunitextras.module('curry methods');
 
   _.each(['curry', 'curryRight'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('fp.' + methodName + '` should only accept a `func` param', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should only accept a `func` param', function(assert) {
       assert.expect(1);
 
       assert.raises(function() { func(1, _.noop); }, TypeError);
@@ -844,12 +847,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('curryN methods');
+  ext_qunitextras_qunitextras.module('curryN methods');
 
   _.each(['curryN', 'curryRightN'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('fp.' + methodName + '` should accept an `arity` param', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should accept an `arity` param', function(assert) {
       assert.expect(1);
 
       var actual = func(1)(function(a, b) { return [a, b]; })('a');
@@ -859,10 +862,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.defaultTo');
+  ext_qunitextras_qunitextras.module('fp.defaultTo');
 
   (function() {
-    QUnit.test('should have an argument order of `defaultValue` then `value`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `defaultValue` then `value`', function(assert) {
       assert.expect(2);
 
       assert.strictEqual(fp.defaultTo(1)(0), 0);
@@ -872,10 +875,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.difference');
+  ext_qunitextras_qunitextras.module('fp.difference');
 
   (function() {
-    QUnit.test('should return the elements of the first array not included in the second array', function(assert) {
+    ext_qunitextras_qunitextras.test('should return the elements of the first array not included in the second array', function(assert) {
       assert.expect(1);
 
       var actual = fp.difference([2, 1], [2, 3]);
@@ -885,17 +888,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.differenceBy');
+  ext_qunitextras_qunitextras.module('fp.differenceBy');
 
   (function() {
-    QUnit.test('should have an argument order of `iteratee`, `array`, then `values`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `iteratee`, `array`, then `values`', function(assert) {
       assert.expect(1);
 
       var actual = fp.differenceBy(Math.floor, [2.1, 1.2], [2.3, 3.4]);
       assert.deepEqual(actual, [1.2]);
     });
 
-    QUnit.test('should provide the correct `iteratee` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `iteratee` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -910,10 +913,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.differenceWith');
+  ext_qunitextras_qunitextras.module('fp.differenceWith');
 
   (function() {
-    QUnit.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
       assert.expect(1);
 
       var actual = fp.differenceWith(fp.eq)([2, 1])([2, 3]);
@@ -923,13 +926,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.divide and fp.multiply');
+  ext_qunitextras_qunitextras.module('fp.divide and fp.multiply');
 
   _.each(['divide', 'multiply'], function(methodName) {
     var func = fp[methodName],
         isDivide = methodName == 'divide';
 
-    QUnit.test('`fp.' + methodName + '` should not have `rearg` applied', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should not have `rearg` applied', function(assert) {
       assert.expect(1);
 
       assert.strictEqual(func('2')('4'), isDivide ? 0.5 : 8);
@@ -938,10 +941,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.extend');
+  ext_qunitextras_qunitextras.module('fp.extend');
 
   (function() {
-    QUnit.test('should convert by name', function(assert) {
+    ext_qunitextras_qunitextras.test('should convert by name', function(assert) {
       assert.expect(2);
 
       function Foo() {}
@@ -958,17 +961,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.fill');
+  ext_qunitextras_qunitextras.module('fp.fill');
 
   (function() {
-    QUnit.test('should have an argument order of `start`, `end`, then `value`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `start`, `end`, then `value`', function(assert) {
       assert.expect(1);
 
       var array = [1, 2, 3];
       assert.deepEqual(fp.fill(1)(2)('*')(array), [1, '*', 3]);
     });
 
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3],
@@ -981,12 +984,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.findFrom methods');
+  ext_qunitextras_qunitextras.module('fp.findFrom methods');
 
   _.each(['findFrom', 'findIndexFrom', 'findLastFrom', 'findLastIndexFrom'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('fp.' + methodName + '` should provide the correct `predicate` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should provide the correct `predicate` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -1001,14 +1004,14 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.findFrom');
+  ext_qunitextras_qunitextras.module('fp.findFrom');
 
   (function() {
     function resolve(value) {
       return fp.flow(fp.property('a'), fp.eq(value));
     }
 
-    QUnit.test('should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
       assert.expect(2);
 
       var objects = [{ 'a': 1 }, { 'a': 2 }, { 'a': 1 }, { 'a': 2 }];
@@ -1020,14 +1023,14 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.findLastFrom');
+  ext_qunitextras_qunitextras.module('fp.findLastFrom');
 
   (function() {
     function resolve(value) {
       return fp.flow(fp.property('a'), fp.eq(value));
     }
 
-    QUnit.test('should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
       assert.expect(2);
 
       var objects = [{ 'a': 1 }, { 'a': 2 }, { 'a': 1 }, { 'a': 2 }];
@@ -1039,13 +1042,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.findIndexFrom and fp.indexOfFrom');
+  ext_qunitextras_qunitextras.module('fp.findIndexFrom and fp.indexOfFrom');
 
   _.each(['findIndexFrom', 'indexOfFrom'], function(methodName) {
     var func = fp[methodName],
         resolve = methodName == 'findIndexFrom' ? fp.eq : _.identity;
 
-    QUnit.test('fp.' + methodName + '` should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3, 1, 2, 3];
@@ -1057,13 +1060,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.findLastIndexFrom and fp.lastIndexOfFrom');
+  ext_qunitextras_qunitextras.module('fp.findLastIndexFrom and fp.lastIndexOfFrom');
 
   _.each(['findLastIndexFrom', 'lastIndexOfFrom'], function(methodName) {
     var func = fp[methodName],
         resolve = methodName == 'findLastIndexFrom' ? fp.eq : _.identity;
 
-    QUnit.test('fp.' + methodName + '` should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should have an argument order of `value`, `fromIndex`, then `array`', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3, 1, 2, 3];
@@ -1075,10 +1078,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.flatMapDepth');
+  ext_qunitextras_qunitextras.module('fp.flatMapDepth');
 
   (function() {
-    QUnit.test('should have an argument order of `iteratee`, `depth`, then `collection`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `iteratee`, `depth`, then `collection`', function(assert) {
       assert.expect(2);
 
       function duplicate(n) {
@@ -1096,13 +1099,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('flow methods');
+  ext_qunitextras_qunitextras.module('flow methods');
 
   _.each(['flow', 'flowRight'], function(methodName) {
     var func = fp[methodName],
         isFlow = methodName == 'flow';
 
-    QUnit.test('`fp.' + methodName + '` should support shortcut fusion', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should support shortcut fusion', function(assert) {
       assert.expect(6);
 
       var filterCount,
@@ -1144,12 +1147,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('forEach methods');
+  ext_qunitextras_qunitextras.module('forEach methods');
 
   _.each(['forEach', 'forEachRight', 'forIn', 'forInRight', 'forOwn', 'forOwnRight'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should provide `value` to `iteratee`', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should provide `value` to `iteratee`', function(assert) {
       assert.expect(2);
 
       var args;
@@ -1172,10 +1175,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.getOr');
+  ext_qunitextras_qunitextras.module('fp.getOr');
 
   (function() {
-    QUnit.test('should accept a `defaultValue` param', function(assert) {
+    ext_qunitextras_qunitextras.test('should accept a `defaultValue` param', function(assert) {
       assert.expect(1);
 
       var actual = fp.getOr('default')('path')({});
@@ -1185,12 +1188,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.gt and fp.gte');
+  ext_qunitextras_qunitextras.module('fp.gt and fp.gte');
 
   _.each(['gt', 'gte'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should have `rearg` applied', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should have `rearg` applied', function(assert) {
       assert.expect(1);
 
       assert.strictEqual(func(2)(1), true);
@@ -1199,10 +1202,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.inRange');
+  ext_qunitextras_qunitextras.module('fp.inRange');
 
   (function() {
-    QUnit.test('should have an argument order of `start`, `end`, then `value`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `start`, `end`, then `value`', function(assert) {
       assert.expect(2);
 
       assert.strictEqual(fp.inRange(2)(4)(3), true);
@@ -1212,17 +1215,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.intersectionBy');
+  ext_qunitextras_qunitextras.module('fp.intersectionBy');
 
   (function() {
-    QUnit.test('should have an argument order of `iteratee`, `array`, then `values`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `iteratee`, `array`, then `values`', function(assert) {
       assert.expect(1);
 
       var actual = fp.intersectionBy(Math.floor, [2.1, 1.2], [2.3, 3.4]);
       assert.deepEqual(actual, [2.1]);
     });
 
-    QUnit.test('should provide the correct `iteratee` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `iteratee` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -1237,10 +1240,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.intersectionWith');
+  ext_qunitextras_qunitextras.module('fp.intersectionWith');
 
   (function() {
-    QUnit.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
       assert.expect(1);
 
       var actual = fp.intersectionWith(fp.eq)([2, 1])([2, 3]);
@@ -1250,10 +1253,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.invoke');
+  ext_qunitextras_qunitextras.module('fp.invoke');
 
   (function() {
-    QUnit.test('should not accept an `args` param', function(assert) {
+    ext_qunitextras_qunitextras.test('should not accept an `args` param', function(assert) {
       assert.expect(1);
 
       var actual = fp.invoke('toUpperCase')('a');
@@ -1263,10 +1266,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.invokeMap');
+  ext_qunitextras_qunitextras.module('fp.invokeMap');
 
   (function() {
-    QUnit.test('should not accept an `args` param', function(assert) {
+    ext_qunitextras_qunitextras.test('should not accept an `args` param', function(assert) {
       assert.expect(1);
 
       var actual = fp.invokeMap('toUpperCase')(['a', 'b']);
@@ -1276,10 +1279,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.invokeArgs');
+  ext_qunitextras_qunitextras.module('fp.invokeArgs');
 
   (function() {
-    QUnit.test('should accept an `args` param', function(assert) {
+    ext_qunitextras_qunitextras.test('should accept an `args` param', function(assert) {
       assert.expect(1);
 
       var actual = fp.invokeArgs('concat')(['b', 'c'])('a');
@@ -1289,10 +1292,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.invokeArgsMap');
+  ext_qunitextras_qunitextras.module('fp.invokeArgsMap');
 
   (function() {
-    QUnit.test('should accept an `args` param', function(assert) {
+    ext_qunitextras_qunitextras.test('should accept an `args` param', function(assert) {
       assert.expect(1);
 
       var actual = fp.invokeArgsMap('concat')(['b', 'c'])(['a', 'A']);
@@ -1302,10 +1305,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.isEqualWith');
+  ext_qunitextras_qunitextras.module('fp.isEqualWith');
 
   (function() {
-    QUnit.test('should provide the correct `customizer` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `customizer` arguments', function(assert) {
       assert.expect(1);
 
       var args,
@@ -1329,10 +1332,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.isMatchWith');
+  ext_qunitextras_qunitextras.module('fp.isMatchWith');
 
   (function() {
-    QUnit.test('should provide the correct `customizer` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `customizer` arguments', function(assert) {
       assert.expect(1);
 
       var args,
@@ -1353,17 +1356,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.iteratee');
+  ext_qunitextras_qunitextras.module('fp.iteratee');
 
   (function() {
-    QUnit.test('should return a iteratee with capped params', function(assert) {
+    ext_qunitextras_qunitextras.test('should return a iteratee with capped params', function(assert) {
       assert.expect(1);
 
       var func = fp.iteratee(function(a, b, c) { return [a, b, c]; }, 3);
       assert.deepEqual(func(1, 2, 3), [1, undefined, undefined]);
     });
 
-    QUnit.test('should convert by name', function(assert) {
+    ext_qunitextras_qunitextras.test('should convert by name', function(assert) {
       assert.expect(1);
 
       var iteratee = convert('iteratee', _.iteratee),
@@ -1375,12 +1378,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.lt and fp.lte');
+  ext_qunitextras_qunitextras.module('fp.lt and fp.lte');
 
   _.each(['lt', 'lte'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should have `rearg` applied', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should have `rearg` applied', function(assert) {
       assert.expect(1);
 
       assert.strictEqual(func(1)(2), true);
@@ -1389,10 +1392,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.mapKeys');
+  ext_qunitextras_qunitextras.module('fp.mapKeys');
 
   (function() {
-    QUnit.test('should only provide `key` to `iteratee`', function(assert) {
+    ext_qunitextras_qunitextras.test('should only provide `key` to `iteratee`', function(assert) {
       assert.expect(1);
 
       var args;
@@ -1407,14 +1410,14 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.maxBy and fp.minBy');
+  ext_qunitextras_qunitextras.module('fp.maxBy and fp.minBy');
 
   _.each(['maxBy', 'minBy'], function(methodName) {
     var array = [1, 2, 3],
         func = fp[methodName],
         isMax = methodName == 'maxBy';
 
-    QUnit.test('`fp.' + methodName + '` should work with an `iteratee` argument', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should work with an `iteratee` argument', function(assert) {
       assert.expect(1);
 
       var actual = func(function(num) {
@@ -1424,7 +1427,7 @@
       assert.strictEqual(actual, isMax ? 1 : 3);
     });
 
-    QUnit.test('`fp.' + methodName + '` should provide the correct `iteratee` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should provide the correct `iteratee` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -1439,10 +1442,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.mergeWith');
+  ext_qunitextras_qunitextras.module('fp.mergeWith');
 
   (function() {
-    QUnit.test('should provide the correct `customizer` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `customizer` arguments', function(assert) {
       assert.expect(1);
 
       var args,
@@ -1459,7 +1462,7 @@
       assert.deepEqual(args, expected);
     });
 
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var objects = [{ 'a': [1, 2] }, { 'a': [3] }],
@@ -1472,10 +1475,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.mergeAllWith');
+  ext_qunitextras_qunitextras.module('fp.mergeAllWith');
 
   (function() {
-    QUnit.test('should provide the correct `customizer` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `customizer` arguments', function(assert) {
       assert.expect(1);
 
       var args,
@@ -1496,12 +1499,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.mixin');
+  ext_qunitextras_qunitextras.module('fp.mixin');
 
   (function() {
     var source = { 'a': _.noop };
 
-    QUnit.test('should mixin static methods but not prototype methods', function(assert) {
+    ext_qunitextras_qunitextras.test('should mixin static methods but not prototype methods', function(assert) {
       assert.expect(2);
 
       fp.mixin(source);
@@ -1513,7 +1516,7 @@
       delete fp.prototype.a;
     });
 
-    QUnit.test('should not assign inherited `source` methods', function(assert) {
+    ext_qunitextras_qunitextras.test('should not assign inherited `source` methods', function(assert) {
       assert.expect(2);
 
       function Foo() {}
@@ -1527,7 +1530,7 @@
       delete fp.prototype.a;
     });
 
-    QUnit.test('should not remove existing prototype methods', function(assert) {
+    ext_qunitextras_qunitextras.test('should not remove existing prototype methods', function(assert) {
       assert.expect(2);
 
       var each1 = fp.each,
@@ -1542,7 +1545,7 @@
       fp.prototype.each = each2;
     });
 
-    QUnit.test('should not export to the global when `source` is not an object', function(assert) {
+    ext_qunitextras_qunitextras.test('should not export to the global when `source` is not an object', function(assert) {
       assert.expect(2);
 
       var props = _.without(_.keys(_), '_');
@@ -1562,7 +1565,7 @@
       });
     });
 
-    QUnit.test('should convert by name', function(assert) {
+    ext_qunitextras_qunitextras.test('should convert by name', function(assert) {
       assert.expect(3);
 
       var object = { 'mixin': convert('mixin', _.mixin) };
@@ -1581,10 +1584,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.nthArg');
+  ext_qunitextras_qunitextras.module('fp.nthArg');
 
   (function() {
-    QUnit.test('should return a curried function', function(assert) {
+    ext_qunitextras_qunitextras.test('should return a curried function', function(assert) {
       assert.expect(2);
 
       var func = fp.nthArg(1);
@@ -1597,10 +1600,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.over');
+  ext_qunitextras_qunitextras.module('fp.over');
 
   (function() {
-    QUnit.test('should not cap iteratee args', function(assert) {
+    ext_qunitextras_qunitextras.test('should not cap iteratee args', function(assert) {
       assert.expect(2);
 
       _.each([fp.over, convert('over', _.over)], function(func) {
@@ -1612,12 +1615,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.omitBy and fp.pickBy');
+  ext_qunitextras_qunitextras.module('fp.omitBy and fp.pickBy');
 
   _.each(['omitBy', 'pickBy'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should provide `value` and `key` to `iteratee`', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should provide `value` and `key` to `iteratee`', function(assert) {
       assert.expect(1);
 
       var args;
@@ -1632,14 +1635,14 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('padChars methods');
+  ext_qunitextras_qunitextras.module('padChars methods');
 
   _.each(['padChars', 'padCharsStart', 'padCharsEnd'], function(methodName) {
     var func = fp[methodName],
         isPad = methodName == 'padChars',
         isStart = methodName == 'padCharsStart';
 
-    QUnit.test('fp.' + methodName + '` should truncate pad characters to fit the pad length', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should truncate pad characters to fit the pad length', function(assert) {
       assert.expect(1);
 
       if (isPad) {
@@ -1652,13 +1655,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('partial methods');
+  ext_qunitextras_qunitextras.module('partial methods');
 
   _.each(['partial', 'partialRight'], function(methodName) {
     var func = fp[methodName],
         isPartial = methodName == 'partial';
 
-    QUnit.test('fp.' + methodName + '` should accept an `args` param', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should accept an `args` param', function(assert) {
       assert.expect(1);
 
       var expected = isPartial ? [1, 2, 3] : [0, 1, 2];
@@ -1670,7 +1673,7 @@
       assert.deepEqual(actual, expected);
     });
 
-    QUnit.test('fp.' + methodName + '` should convert by name', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should convert by name', function(assert) {
       assert.expect(2);
 
       var expected = isPartial ? [1, 2, 3] : [0, 1, 2],
@@ -1693,10 +1696,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.propertyOf');
+  ext_qunitextras_qunitextras.module('fp.propertyOf');
 
   (function() {
-    QUnit.test('should be curried', function(assert) {
+    ext_qunitextras_qunitextras.test('should be curried', function(assert) {
       assert.expect(2);
 
       var object = { 'a': 1 };
@@ -1708,10 +1711,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.pull');
+  ext_qunitextras_qunitextras.module('fp.pull');
 
   (function() {
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3],
@@ -1724,10 +1727,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.pullAll');
+  ext_qunitextras_qunitextras.module('fp.pullAll');
 
   (function() {
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3],
@@ -1740,10 +1743,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.pullAt');
+  ext_qunitextras_qunitextras.module('fp.pullAt');
 
   (function() {
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3],
@@ -1756,12 +1759,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.random');
+  ext_qunitextras_qunitextras.module('fp.random');
 
   (function() {
     var array = Array(1000);
 
-    QUnit.test('should support a `min` and `max` argument', function(assert) {
+    ext_qunitextras_qunitextras.test('should support a `min` and `max` argument', function(assert) {
       assert.expect(1);
 
       var min = 5,
@@ -1776,13 +1779,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('range methods');
+  ext_qunitextras_qunitextras.module('range methods');
 
   _.each(['range', 'rangeRight'], function(methodName) {
     var func = fp[methodName],
         isRange = methodName == 'range';
 
-    QUnit.test('fp.' + methodName + '` should have an argument order of `start` then `end`', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should have an argument order of `start` then `end`', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(func(1)(4), isRange ? [1, 2, 3] : [3, 2, 1]);
@@ -1791,13 +1794,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('rangeStep methods');
+  ext_qunitextras_qunitextras.module('rangeStep methods');
 
   _.each(['rangeStep', 'rangeStepRight'], function(methodName) {
     var func = fp[methodName],
         isRange = methodName == 'rangeStep';
 
-    QUnit.test('fp.' + methodName + '` should have an argument order of `step`, `start`, then `end`', function(assert) {
+    ext_qunitextras_qunitextras.test('fp.' + methodName + '` should have an argument order of `step`, `start`, then `end`', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(func(2)(1)(4), isRange ? [1, 3] : [3, 1]);
@@ -1806,21 +1809,21 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.rearg');
+  ext_qunitextras_qunitextras.module('fp.rearg');
 
   (function() {
     function fn(a, b, c) {
       return [a, b, c];
     }
 
-    QUnit.test('should be curried', function(assert) {
+    ext_qunitextras_qunitextras.test('should be curried', function(assert) {
       assert.expect(1);
 
       var rearged = fp.rearg([1, 2, 0])(fn);
       assert.deepEqual(rearged('c', 'a', 'b'), ['a', 'b', 'c']);
     });
 
-    QUnit.test('should return a curried function', function(assert) {
+    ext_qunitextras_qunitextras.test('should return a curried function', function(assert) {
       assert.expect(1);
 
       var rearged = fp.rearg([1, 2, 0], fn);
@@ -1830,13 +1833,13 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('reduce methods');
+  ext_qunitextras_qunitextras.module('reduce methods');
 
   _.each(['reduce', 'reduceRight'], function(methodName) {
     var func = fp[methodName],
         isReduce = methodName == 'reduce';
 
-    QUnit.test('`fp.' + methodName + '` should provide the correct `iteratee` arguments when iterating an array', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should provide the correct `iteratee` arguments when iterating an array', function(assert) {
       assert.expect(1);
 
       var args;
@@ -1848,7 +1851,7 @@
       assert.deepEqual(args, isReduce ? [0, 1] : [3, 0]);
     });
 
-    QUnit.test('`fp.' + methodName + '` should provide the correct `iteratee` arguments when iterating an object', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should provide the correct `iteratee` arguments when iterating an object', function(assert) {
       assert.expect(1);
 
       var args,
@@ -1869,10 +1872,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.remove');
+  ext_qunitextras_qunitextras.module('fp.remove');
 
   (function() {
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3],
@@ -1885,10 +1888,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.restFrom');
+  ext_qunitextras_qunitextras.module('fp.restFrom');
 
   (function() {
-    QUnit.test('should accept a `start` param', function(assert) {
+    ext_qunitextras_qunitextras.test('should accept a `start` param', function(assert) {
       assert.expect(1);
 
       var actual = fp.restFrom(2)(function() {
@@ -1901,10 +1904,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.reverse');
+  ext_qunitextras_qunitextras.module('fp.reverse');
 
   (function() {
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var array = [1, 2, 3],
@@ -1917,16 +1920,16 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.runInContext');
+  ext_qunitextras_qunitextras.module('fp.runInContext');
 
   (function() {
-    QUnit.test('should return a converted lodash instance', function(assert) {
+    ext_qunitextras_qunitextras.test('should return a converted lodash instance', function(assert) {
       assert.expect(1);
 
       assert.strictEqual(typeof fp.runInContext({}).curryN, 'function');
     });
 
-    QUnit.test('should convert by name', function(assert) {
+    ext_qunitextras_qunitextras.test('should convert by name', function(assert) {
       assert.expect(1);
 
       var runInContext = convert('runInContext', _.runInContext);
@@ -1936,10 +1939,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.set');
+  ext_qunitextras_qunitextras.module('fp.set');
 
   (function() {
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var object = { 'a': { 'b': 2, 'c': 3 } },
@@ -1952,10 +1955,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.setWith');
+  ext_qunitextras_qunitextras.module('fp.setWith');
 
   (function() {
-    QUnit.test('should provide the correct `customizer` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `customizer` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -1967,7 +1970,7 @@
       assert.deepEqual(args, [undefined, 'b', { 'a': 1 }]);
     });
 
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var object = { 'a': { 'b': 2, 'c': 3 } },
@@ -1980,10 +1983,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.spreadFrom');
+  ext_qunitextras_qunitextras.module('fp.spreadFrom');
 
   (function() {
-    QUnit.test('should accept a `start` param', function(assert) {
+    ext_qunitextras_qunitextras.test('should accept a `start` param', function(assert) {
       assert.expect(1);
 
       var actual = fp.spreadFrom(2)(function() {
@@ -1996,7 +1999,7 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('trimChars methods');
+  ext_qunitextras_qunitextras.module('trimChars methods');
 
   _.each(['trimChars', 'trimCharsStart', 'trimCharsEnd'], function(methodName, index) {
     var func = fp[methodName],
@@ -2010,7 +2013,7 @@
     }
     parts = parts.join(' and ');
 
-    QUnit.test('`fp.' + methodName + '` should remove ' + parts + ' `chars`', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should remove ' + parts + ' `chars`', function(assert) {
       assert.expect(1);
 
       var string = '-_-a-b-c-_-',
@@ -2022,17 +2025,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.unionBy');
+  ext_qunitextras_qunitextras.module('fp.unionBy');
 
   (function() {
-    QUnit.test('should have an argument order of `iteratee`, `array`, then `other`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `iteratee`, `array`, then `other`', function(assert) {
       assert.expect(1);
 
       var actual = fp.unionBy(Math.floor, [2.1], [1.2, 2.3]);
       assert.deepEqual(actual, [2.1, 1.2]);
     });
 
-    QUnit.test('should provide the correct `iteratee` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `iteratee` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -2047,17 +2050,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.unionWith');
+  ext_qunitextras_qunitextras.module('fp.unionWith');
 
   (function() {
-    QUnit.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
       assert.expect(1);
 
       var actual = fp.unionWith(fp.eq)([2, 1])([2, 3]);
       assert.deepEqual(actual, [2, 1, 3]);
     });
 
-    QUnit.test('should provide the correct `comparator` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `comparator` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -2072,12 +2075,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.uniqBy');
+  ext_qunitextras_qunitextras.module('fp.uniqBy');
 
   (function() {
     var objects = [{ 'a': 2 }, { 'a': 3 }, { 'a': 1 }, { 'a': 2 }, { 'a': 3 }, { 'a': 1 }];
 
-    QUnit.test('should work with an `iteratee` argument', function(assert) {
+    ext_qunitextras_qunitextras.test('should work with an `iteratee` argument', function(assert) {
       assert.expect(1);
 
       var expected = objects.slice(0, 3),
@@ -2086,7 +2089,7 @@
       assert.deepEqual(actual, expected);
     });
 
-    QUnit.test('should provide the correct `iteratee` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `iteratee` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -2101,17 +2104,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.uniqWith');
+  ext_qunitextras_qunitextras.module('fp.uniqWith');
 
   (function() {
-    QUnit.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
       assert.expect(1);
 
       var actual = fp.uniqWith(fp.eq)([2, 1, 2]);
       assert.deepEqual(actual, [2, 1]);
     });
 
-    QUnit.test('should provide the correct `comparator` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `comparator` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -2126,17 +2129,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.update');
+  ext_qunitextras_qunitextras.module('fp.update');
 
   (function() {
-    QUnit.test('should not convert end of `path` to an object', function(assert) {
+    ext_qunitextras_qunitextras.test('should not convert end of `path` to an object', function(assert) {
       assert.expect(1);
 
       var actual = fp.update('a.b')(_.identity)({ 'a': { 'b': 1 } });
       assert.strictEqual(typeof actual.a.b, 'number');
     });
 
-    QUnit.test('should not convert uncloneables to objects', function(assert) {
+    ext_qunitextras_qunitextras.test('should not convert uncloneables to objects', function(assert) {
       assert.expect(2);
 
       var object = { 'a': { 'b': _.constant(true) } },
@@ -2146,7 +2149,7 @@
       assert.strictEqual(object.a.b, actual.a.b);
     });
 
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var object = { 'a': { 'b': 2, 'c': 3 } },
@@ -2159,10 +2162,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.updateWith');
+  ext_qunitextras_qunitextras.module('fp.updateWith');
 
   (function() {
-    QUnit.test('should provide the correct `customizer` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `customizer` arguments', function(assert) {
       var args;
 
       fp.updateWith(function() {
@@ -2172,7 +2175,7 @@
       assert.deepEqual(args, [undefined, 'b', { 'a': 1 }]);
     });
 
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var object = { 'a': { 'b': 2, 'c': 3 } },
@@ -2185,10 +2188,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.unset');
+  ext_qunitextras_qunitextras.module('fp.unset');
 
   (function() {
-    QUnit.test('should not mutate values', function(assert) {
+    ext_qunitextras_qunitextras.test('should not mutate values', function(assert) {
       assert.expect(2);
 
       var object = { 'a': { 'b': 2, 'c': 3 } },
@@ -2201,17 +2204,17 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.xorBy');
+  ext_qunitextras_qunitextras.module('fp.xorBy');
 
   (function() {
-    QUnit.test('should have an argument order of `iteratee`, `array`, then `other`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `iteratee`, `array`, then `other`', function(assert) {
       assert.expect(1);
 
       var actual = fp.xorBy(Math.floor, [2.1, 1.2], [2.3, 3.4]);
       assert.deepEqual(actual, [1.2, 3.4]);
     });
 
-    QUnit.test('should provide the correct `iteratee` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('should provide the correct `iteratee` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -2226,10 +2229,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.xorWith');
+  ext_qunitextras_qunitextras.module('fp.xorWith');
 
   (function() {
-    QUnit.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
+    ext_qunitextras_qunitextras.test('should have an argument order of `comparator`, `array`, then `values`', function(assert) {
       assert.expect(1);
 
       var actual = fp.xorWith(fp.eq)([2, 1])([2, 3]);
@@ -2239,12 +2242,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('with methods');
+  ext_qunitextras_qunitextras.module('with methods');
 
   _.each(['differenceWith', 'intersectionWith', 'xorWith'], function(methodName) {
     var func = fp[methodName];
 
-    QUnit.test('`fp.' + methodName + '` should provide the correct `comparator` arguments', function(assert) {
+    ext_qunitextras_qunitextras.test('`fp.' + methodName + '` should provide the correct `comparator` arguments', function(assert) {
       assert.expect(1);
 
       var args;
@@ -2259,10 +2262,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.zip');
+  ext_qunitextras_qunitextras.module('fp.zip');
 
   (function() {
-    QUnit.test('should zip together two arrays', function(assert) {
+    ext_qunitextras_qunitextras.test('should zip together two arrays', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(fp.zip([1, 2])([3, 4]), [[1, 3], [2, 4]]);
@@ -2271,10 +2274,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.zipAll');
+  ext_qunitextras_qunitextras.module('fp.zipAll');
 
   (function() {
-    QUnit.test('should zip together an array of arrays', function(assert) {
+    ext_qunitextras_qunitextras.test('should zip together an array of arrays', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(fp.zipAll([[1, 2], [3, 4], [5, 6]]), [[1, 3, 5], [2, 4, 6]]);
@@ -2283,10 +2286,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.zipObject');
+  ext_qunitextras_qunitextras.module('fp.zipObject');
 
   (function() {
-    QUnit.test('should zip together key/value arrays into an object', function(assert) {
+    ext_qunitextras_qunitextras.test('should zip together key/value arrays into an object', function(assert) {
       assert.expect(1);
 
       assert.deepEqual(fp.zipObject(['a', 'b'])([1, 2]), { 'a': 1, 'b': 2 });
@@ -2295,10 +2298,10 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.module('fp.zipWith');
+  ext_qunitextras_qunitextras.module('fp.zipWith');
 
   (function() {
-    QUnit.test('should zip arrays combining grouped elements with `iteratee`', function(assert) {
+    ext_qunitextras_qunitextras.test('should zip arrays combining grouped elements with `iteratee`', function(assert) {
       assert.expect(1);
 
       var array1 = [1, 2, 3],
@@ -2311,12 +2314,12 @@
 
   /*--------------------------------------------------------------------------*/
 
-  QUnit.config.asyncRetries = 10;
-  QUnit.config.hidepassed = true;
+  ext_qunitextras_qunitextras.config.asyncRetries = 10;
+  ext_qunitextras_qunitextras.config.hidepassed = true;
 
   if (!document) {
-    QUnit.config.noglobals = true;
-    QUnit.load();
-    QUnit.start();
+    ext_qunitextras_qunitextras.config.noglobals = true;
+    ext_qunitextras_qunitextras.load();
+    ext_qunitextras_qunitextras.start();
   }
 }.call(this));
