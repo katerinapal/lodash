@@ -1,4 +1,6 @@
-;(function() {
+var StackTrace = require('../node_modules/stacktrace-js');
+
+(function() {
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
   var undefined;
@@ -549,8 +551,11 @@
         'configurable': true,
         'enumerable': true,
         'get': function get() {
-          var caller = get.caller,
-              name = caller ? caller.name : '';
+          var callers = StackTrace.getSync();
+          // var caller = get.caller,
+          // name = caller ? caller.name : '';
+          var caller = callers[0].functionName ? callers[0].functionName : '',
+              name = caller;
 
           if (!(name == 'runInContext' || name.length == 1 || /\b_\.isBuffer\b/.test(caller))) {
             return Buffer;
